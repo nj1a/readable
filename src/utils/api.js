@@ -1,5 +1,5 @@
 const api = 'http://localhost:3001'
-const headers = { Authorization: 'whatever-you-want' }
+const headers = { Authorization: 'ashtrg43sf' }
 
 export const getAllCategories = () => 
     fetch(`${api}/categories`, { headers })
@@ -16,14 +16,14 @@ export const getAllPosts = () =>
         .then(res => res.json())
         .then(data => data.posts)
 
-export const addPost = (id, timestamp, title, body, owner, category) =>
+export const addPost = (id, timestamp, title, body, author, category) =>
     fetch(`${api}/posts`, {
         method: 'POST',
         headers: {
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, timestamp, title, body, owner, category })
+        body: JSON.stringify({ id, timestamp, title, body, author, category })
     }).then(res => res.json())
         .then(data => data.post)
 
@@ -32,8 +32,8 @@ export const getPost = (id) =>
         .then(res => res.json())
         .then(data => data.post)
 
-export const votePost = (option) =>
-    fetch(`${api}/posts`, {
+export const votePost = (id, option) =>
+    fetch(`${api}/posts/${id}`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -64,14 +64,14 @@ export const getCommentsOfPost = (id) =>
         .then(res => res.json())
         .then(data => data.comments)
 
-export const addComment = (id, timestamp, title, body, owner, parentId) =>
+export const addComment = (id, timestamp, title, body, author, parentId) =>
     fetch(`${api}/comments`, {
         method: 'POST',
         headers: {
             ...headers,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, timestamp, title, body, owner, parentId })
+        body: JSON.stringify({ id, timestamp, title, body, author, parentId })
     }).then(res => res.json())
         .then(data => data.comment)
 
@@ -80,8 +80,8 @@ export const getComment = (id) =>
         .then(res => res.json())
         .then(data => data.comment)
 
-export const voteComment = (option) =>
-    fetch(`${api}/comments`, {
+export const voteComment = (id, option) =>
+    fetch(`${api}/comments/${id}`, {
         method: 'POST',
         headers: {
             ...headers,
