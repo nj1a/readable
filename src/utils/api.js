@@ -14,7 +14,7 @@ export const getPostsOfCategory = (category) =>
 export const getAllPosts = () =>
     fetch(`${api}/posts`, { headers })
         .then(res => res.json())
-        .then(data => data.posts)
+        .then(data => data)
 
 export const addPost = (id, timestamp, title, body, author, category) =>
     fetch(`${api}/posts`, {
