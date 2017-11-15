@@ -12,8 +12,10 @@ const fetchCategories = () => ({
         schema: Schemas.CATEGORIES
     }
 });
+console.log('k')
 
 export const loadCategories = (requiredFields = []) => (dispatch, getState) => {
+    console.log('here')
     const categories = getState().entities.categories
     return (categories && requiredFields.every(key => categories.hasOwnProperty(key)))
         ? null

@@ -9,9 +9,6 @@ const callApi = (endpoint, schema) => {
             json => res.ok ? normalize(json, schema) : Promise.reject(json)));
 }
 
-// const categorySchema = new schema.Entity('categories', {}, {
-//     idAttribute: category => category.name
-// });
 const categorySchema = new schema.Entity('categories', {}, {idAttribute: 'name'})
 const postSchema = new schema.Entity('posts', {});
 

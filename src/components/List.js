@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import isEmpty from 'lodash/isEmpty'; 
 
 export default class List extends Component {
