@@ -12,9 +12,7 @@ class Categories extends Component {
     };
 
     componentDidMount() {
-        console.log('he')
-        loadCategories(['name'])
-        console.log('ok')
+        this.props.loadCategories(['name'])
     }
 
     render() {

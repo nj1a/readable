@@ -16,13 +16,12 @@ export default class List extends Component {
 
     render() {
         const { categories, loadingLabel } = this.props;
-        console.log(categories)
         if (isEmpty(categories)) {
             return <h2><i>{loadingLabel}</i></h2>
         }
-        return (categories.map(category =>
-            <li key={category.name}>
-                {category.name}
+        return (Object.keys(categories).map(name =>
+            <li key={name}>
+                {name}
             </li>
         ))
     }
