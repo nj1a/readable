@@ -4,12 +4,12 @@ const headers = { Authorization: 'ashtrg43sf' }
 export const getAllCategories = () => 
     fetch(`${api}/categories`, { headers })
         .then(res => res.json())
-        .then(data => data.categories)
+        .then(data => data)
 
 export const getPostsOfCategory = (category) =>
     fetch(`${api}/${category}/posts`, { headers })
         .then(res => res.json())
-        .then(data => data.categories)
+        .then(data => data)
 
 export const getAllPosts = () =>
     fetch(`${api}/posts`, { headers })

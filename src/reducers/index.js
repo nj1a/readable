@@ -3,9 +3,9 @@ import merge from 'lodash/merge';
 
 import * as ActionTypes from '../actions';
 
-const entities = (state = { categories: {}, posts: {} }, action) => 
-    (action.res && action.res.entities)
-        ? merge({}, state, action.res.entities)
+const entities = (state = { categories: {}, posts: {}, comments: {} }, action) => 
+    (action.response && action.response.entities)
+        ? merge({}, state, action.response.entities)
         : state
 
 const errorMessage = (state = null, action) => {

@@ -5,18 +5,19 @@ const headers = { Authorization: 'ashtrg43sf' }
 
 const callApi = (endpoint, schema) => {
     return fetch(`${API_ROOT}/${endpoint}`, { headers })
-        .then(res => res.json().then(
-            json => res.ok ? normalize(json, schema) : Promise.reject(json)));
-}
+        .then(response => response.json().then(
+            json => response.ok ? normalize(json, schema) : Promise.reject(json)))
+};
+
 
 const categorySchema = new schema.Entity('categories', {}, {idAttribute: 'name'})
-const postSchema = new schema.Entity('posts', {});
+const postSchema = new schema.Entity('posts');
 
 export const Schemas = {
     CATEGORY: categorySchema,
     CATEGORIES: { categories: [categorySchema] },
     POST: postSchema,
-    POSTS: [postSchema]
+    POSTS: [ postSchema ]
 };
 
 export const CALL_API = 'Call API';
@@ -57,8 +58,8 @@ export default store => next => action => {
     next(actionWith({ type: requestType }));
 
     return callApi(endpoint, schema).then(
-        res => next(actionWith({
-            res,
+        response => next(actionWith({
+            response,
             type: successType
         })),
         error => next(actionWith({
