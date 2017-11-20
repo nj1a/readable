@@ -12,12 +12,15 @@ const callApi = (endpoint, schema) => {
 
 const categorySchema = new schema.Entity('categories', {}, {idAttribute: 'name'})
 const postSchema = new schema.Entity('posts');
+const commentSchema = new schema.Entity('comments');
 
 export const Schemas = {
     CATEGORY: categorySchema,
     CATEGORIES: { categories: [categorySchema] },
     POST: postSchema,
-    POSTS: [ postSchema ]
+    POSTS: [postSchema],
+    COMMENT: commentSchema,
+    COMMENTS: [commentSchema]
 };
 
 export const CALL_API = 'Call API';

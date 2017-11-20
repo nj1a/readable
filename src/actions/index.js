@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty';
+
 import { CALL_API, Schemas } from '../middleware/api';
 
 export const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST';
@@ -19,13 +21,13 @@ export const loadCategories = (requiredFields = []) => (dispatch, getState) => {
         : dispatch(fetchCategories())
 }
 
-export const POSTS_REQUEST = 'POSTS_REQUEST';
-export const POSTS_SUCCESS = 'POSTS_SUCCESS';
-export const POSTS_FAILURE = 'POSTS_FAILURE';
+export const POSTS_OF_CATEGORY_REQUEST = 'POSTS_OF_CATEGORY_REQUEST';
+export const POSTS_OF_CATEGORY_SUCCESS = 'POSTS_OF_CATEGORY_SUCCESS';
+export const POSTS_OF_CATEGORY_FAILURE = 'POSTS_OF_CATEGORY_FAILURE';
 
 const fetchPostsOfCategory = (category) => ({
     [CALL_API]: {
-        types: [POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE],
+        types: [POSTS_OF_CATEGORY_REQUEST, POSTS_OF_CATEGORY_SUCCESS, POSTS_OF_CATEGORY_FAILURE],
         endpoint: `${category}/posts`,
         schema: Schemas.POSTS
     }
@@ -42,3 +44,23 @@ export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
 export const resetErrorMessage = () => ({
     type: RESET_ERROR_MESSAGE
 });
+
+export const POSTS_REQUEST = 'POSTS_REQUEST';
+export const POSTS_SUCCESS = 'POSTS_SUCCESS';
+export const POSTS_FAILURE = 'POSTS_FAILURE';
+
+const fetchPosts = () => ({
+    [CALL_API]: {
+        types: [POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE],
+        endpoint: 'posts',
+        schema: Schemas.POSTS
+    }
+});
+
+export const loadPosts = (requiredFields = []) => (dispatch, getState) => {
+    const posts = getState().entities.posts
+    return (isEmpty(posts))
+        ? dispatch(fetchPosts())
+        : null
+}
+ 

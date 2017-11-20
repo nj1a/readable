@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadCategories, loadPosts } from '../actions/index';
+import { loadCategories, loadPostsOfCategory } from '../actions/index';
 import Category from '../components/Category';
 
-class App extends Component {
+class Categories extends Component {
     static propTypes = {
         categories: PropTypes.object.isRequired,
-        posts: PropTypes.object.isRequired,
         loadCategories: PropTypes.func.isRequired,
-        loadPosts: PropTypes.func.isRequired
+        loadPostsOfCategory: PropTypes.func.isRequired,
+        posts: PropTypes.object.isRequired
     };
 
     componentDidMount() {
         this.props.loadCategories(['name'])
-        this.props.loadPosts()
+        this.props.loadPostsOfCategory(this.props.category)
     }
 
     render() {
         const props = {
-            title: "Readable",
+            title: this.props.category,
             categories: this.props.categories,
-            posts: this.props.posts,
+            posts: Object.values(this.props.posts).filter(post => post.category === this.props.category),
             category: this.props.category,
             loadiingLabel: "Loading..."
         }
@@ -33,13 +33,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    categories: state.entities.categories,
-    posts: state.entities.posts,
     category: ownProps.match.params.category,
+    categories: state.entities.categories,
+    posts: state.entities.posts
 });
 
 export default connect(mapStateToProps, {
-    loadPosts,
-    loadCategories
-})(App);
-
+    loadCategories,
+    loadPostsOfCategory
+})(Categories);
