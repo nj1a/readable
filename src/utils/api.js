@@ -25,12 +25,12 @@ export const addPost = (id, timestamp, title, body, author, category) =>
         },
         body: JSON.stringify({ id, timestamp, title, body, author, category })
     }).then(res => res.json())
-        .then(data => data.post)
+        .then(data => data)
 
 export const getPost = (id) =>
     fetch(`${api}/posts/${id}`, { headers })
         .then(res => res.json())
-        .then(data => data.post)
+        .then(data => data)
 
 export const votePost = (id, option) =>
     fetch(`${api}/posts/${id}`, {
@@ -41,7 +41,7 @@ export const votePost = (id, option) =>
         },
         body: JSON.stringify({ option })
     }).then(res => res.json())
-        .then(data => data.post)
+        .then(data => data)
 
 export const editPost = (id, title, body) =>
     fetch(`${api}/posts/${id}`, {
@@ -62,7 +62,7 @@ export const deletePost = (id) =>
 export const getCommentsOfPost = (id) =>
     fetch(`${api}/posts/${id}/comments`, { headers })
         .then(res => res.json())
-        .then(data => data.comments)
+        .then(data => data)
 
 export const addComment = (id, timestamp, title, body, author, parentId) =>
     fetch(`${api}/comments`, {
@@ -73,12 +73,12 @@ export const addComment = (id, timestamp, title, body, author, parentId) =>
         },
         body: JSON.stringify({ id, timestamp, title, body, author, parentId })
     }).then(res => res.json())
-        .then(data => data.comment)
+        .then(data => data)
 
 export const getComment = (id) =>
     fetch(`${api}/comments/${id}`, { headers })
         .then(res => res.json())
-        .then(data => data.comment)
+        .then(data => data)
 
 export const voteComment = (id, option) =>
     fetch(`${api}/comments/${id}`, {
@@ -89,7 +89,7 @@ export const voteComment = (id, option) =>
         },
         body: JSON.stringify({ option })
     }).then(res => res.json())
-        .then(data => data.comment)
+        .then(data => data)
 
 export const editComment = (id, timestamp, body) =>
     fetch(`${api}/comments/${id}`, {

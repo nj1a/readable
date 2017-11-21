@@ -63,4 +63,21 @@ export const loadPosts = (requiredFields = []) => (dispatch, getState) => {
         ? dispatch(fetchPosts())
         : null
 }
+
+export const POST_REQUEST = 'POST_REQUEST';
+export const POST_SUCCESS = 'POST_SUCCESS';
+export const POST_FAILURE = 'POST_FAILURE';
+
+const fetchPost = (id) => ({
+    [CALL_API]: {
+        types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
+        endpoint: `posts/${id}`,
+        schema: Schemas.POST
+    }
+});
+
+export const loadPost = (id, requiredFields = []) => (dispatch, getState) =>
+    getState().entities.posts[id]
+        ? null
+        : dispatch(fetchPost(id))
  

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { loadCategories, loadPostsOfCategory } from '../actions/index';
 import Category from '../components/Category';
 
-class Categories extends Component {
+class CategoryPage extends Component {
     static propTypes = {
         categories: PropTypes.object.isRequired,
         loadCategories: PropTypes.func.isRequired,
@@ -41,4 +41,4 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(mapStateToProps, {
     loadCategories,
     loadPostsOfCategory
-})(Categories);
+})(CategoryPage);

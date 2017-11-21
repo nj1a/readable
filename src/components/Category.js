@@ -16,8 +16,9 @@ const Category = ({ title, categories, loadingLabel, posts, category }) => {
                     ))}
                 <h3>All Posts</h3>
                 <ul>
-                    {Object.values(posts).map(post =>
-                        <h4 key={post.id}>{post.title}</h4>)}
+                    {Object.values(posts)
+                        .sort((a, b) => b.voteScore - a.voteScore)
+                        .map(post => <Link key={post.id} to={`/posts/${post.id}`}>{post.title}</Link>)}
                 </ul>
             </div>
         </div>
