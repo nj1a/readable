@@ -2,25 +2,40 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { loadPost } from '../actions/index';
+import { loadPost, loadCommentsOfPost } from '../actions/index';
 import Post from '../components/Post';
+import Comment from '../components/Comment';
+
 
 class PostPage extends Component {
     static propTypes = {
         loadPost: PropTypes.func.isRequired,
-        posts: PropTypes.object.isRequired
+        loadCommentsOfPost: PropTypes.func.isRequired,
+        posts: PropTypes.object.isRequired,
+        id: PropTypes.string.isRequired,
+        comments: PropTypes.object.isRequired
     };
 
     componentDidMount() {
         this.props.loadPost(this.props.id)
+        this.props.loadCommentsOfPost(this.props.id)
     }
 
     render() {
-        const props = {
+        const postProps = {
             post: this.props.posts[this.props.id],
-            loadiingLabel: "Loading..."
+            loadingLabel: "Loading..."
         }
-        return props.post ? <Post {...props} /> : null;
+        return (
+            <div>
+                {postProps.post && <Post {...postProps} />}
+                <h2>Comments</h2>
+                {Object.values(this.props.comments)
+                    .filter(comment => comment.parentId === this.props.id)
+                    .map(comment => <Comment key={comment.id} comment={comment} loadingLabel='Loading...' />)}
+            </div>    
+
+        )
     }
 }
 
@@ -31,5 +46,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, {
-    loadPost
+    loadPost,
+    loadCommentsOfPost
 })(PostPage);

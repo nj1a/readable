@@ -80,4 +80,21 @@ export const loadPost = (id, requiredFields = []) => (dispatch, getState) =>
     getState().entities.posts[id]
         ? null
         : dispatch(fetchPost(id))
- 
+
+
+export const COMMENTS_OF_POST_REQUEST = 'COMMENTS_OF_POST_REQUEST';
+export const COMMENTS_OF_POST_SUCCESS = 'COMMENTS_OF_POST_SUCCESS';
+export const COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE';
+
+const fetchCommentsOfPost = (id) => ({
+    [CALL_API]: {
+        types: [COMMENTS_OF_POST_REQUEST, COMMENTS_OF_POST_SUCCESS, COMMENTS_OF_POST_FAILURE],
+        endpoint: `posts/${id}/comments`,
+        schema: Schemas.COMMENTS
+    }
+});
+
+export const loadCommentsOfPost = (id, requiredFields = []) => (dispatch, getState) =>
+    isEmpty(getState().entities.comments)
+        ? dispatch(fetchCommentsOfPost(id))
+        : null
