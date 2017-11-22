@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import './index.css';
 import Root from './containers/Root';
 import configureStore from './store/configureStore'
+
+import './index.css';
 
 // import * as api from './utils/api'
 
@@ -16,7 +17,7 @@ const store = configureStore()
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter> 
             <Root />
         </BrowserRouter>
     </Provider>,
