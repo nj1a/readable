@@ -14,7 +14,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.props.loadCategories(['name'])
+        this.props.loadCategories()
         this.props.loadPosts()
     }
 

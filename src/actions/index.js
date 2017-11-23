@@ -1,100 +1,86 @@
 import isEmpty from 'lodash/isEmpty';
 
-import { CALL_API, Schemas } from '../middleware/api';
-
-export const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST';
-export const CATEGORIES_SUCCESS = 'CATEGORIES_SUCCESS';
-export const CATEGORIES_FAILURE = 'CATEGORIES_FAILURE';
-
-const fetchCategories = () => ({
-    [CALL_API]: {
-        types: [CATEGORIES_REQUEST, CATEGORIES_SUCCESS, CATEGORIES_FAILURE],
-        endpoint: 'categories',
-        schema: Schemas.CATEGORIES
-    }
-});
- 
-export const loadCategories = (requiredFields = []) => (dispatch, getState) => {
-    const categories = getState().entities.categories
-    return (categories && requiredFields.every(key => categories.hasOwnProperty(key)))
-        ? null
-        : dispatch(fetchCategories())
-}
-
-export const POSTS_OF_CATEGORY_REQUEST = 'POSTS_OF_CATEGORY_REQUEST';
-export const POSTS_OF_CATEGORY_SUCCESS = 'POSTS_OF_CATEGORY_SUCCESS';
-export const POSTS_OF_CATEGORY_FAILURE = 'POSTS_OF_CATEGORY_FAILURE';
-
-const fetchPostsOfCategory = (category) => ({
-    [CALL_API]: {
-        types: [POSTS_OF_CATEGORY_REQUEST, POSTS_OF_CATEGORY_SUCCESS, POSTS_OF_CATEGORY_FAILURE],
-        endpoint: `${category}/posts`,
-        schema: Schemas.POSTS
-    }
-});
-
-export const loadPostsOfCategory = (category, requiredFields = []) => (dispatch, getState) => {
-    const posts = getState().entities.posts[category]
-    return (posts && requiredFields.every(key => posts.hasOwnProperty(key)))
-        ? null
-        : dispatch(fetchPostsOfCategory(category))
-}
+import { Schemas } from '../middleware/api';
+import * as api from '../utils/api'
 
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
 export const resetErrorMessage = () => ({
     type: RESET_ERROR_MESSAGE
 });
 
+export const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST';
+export const CATEGORIES_SUCCESS = 'CATEGORIES_SUCCESS';
+export const CATEGORIES_FAILURE = 'CATEGORIES_FAILURE';
+ 
+export const loadCategories = () => (dispatch, getState) => {
+    dispatch({
+        types: [CATEGORIES_REQUEST, CATEGORIES_SUCCESS, CATEGORIES_FAILURE],
+        call: api.getAllCategories,
+        shouldCall: isEmpty(getState().entities.categories),
+        schema: Schemas.CATEGORIES
+    })
+}
+
+export const POSTS_OF_CATEGORY_REQUEST = 'POSTS_OF_CATEGORY_REQUEST';
+export const POSTS_OF_CATEGORY_SUCCESS = 'POSTS_OF_CATEGORY_SUCCESS';
+export const POSTS_OF_CATEGORY_FAILURE = 'POSTS_OF_CATEGORY_FAILURE';
+
+export const loadPostsOfCategory = category => (dispatch, getState) => {
+    dispatch({
+        types: [POSTS_OF_CATEGORY_REQUEST, POSTS_OF_CATEGORY_SUCCESS, POSTS_OF_CATEGORY_FAILURE],
+        call: api.getPostsOfCategory,
+        shouldCall: isEmpty(getState().entities.categories),
+        payload: { category },
+        schema: Schemas.POSTS
+    })
+}
+
 export const POSTS_REQUEST = 'POSTS_REQUEST';
 export const POSTS_SUCCESS = 'POSTS_SUCCESS';
 export const POSTS_FAILURE = 'POSTS_FAILURE';
 
-const fetchPosts = () => ({
-    [CALL_API]: {
+export const loadPosts = () => (dispatch, getState) => {
+    dispatch({
         types: [POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE],
-        endpoint: 'posts',
+        call: api.getAllPosts,
+        shouldCall: isEmpty(getState().entities.posts),
         schema: Schemas.POSTS
-    }
-});
-
-export const loadPosts = (requiredFields = []) => (dispatch, getState) => {
-    const posts = getState().entities.posts
-    return (isEmpty(posts))
-        ? dispatch(fetchPosts())
-        : null
+    })
 }
 
 export const POST_REQUEST = 'POST_REQUEST';
 export const POST_SUCCESS = 'POST_SUCCESS';
 export const POST_FAILURE = 'POST_FAILURE';
 
-const fetchPost = (id) => ({
-    [CALL_API]: {
+export const loadPost = id => (dispatch, getState) =>
+    dispatch({
         types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
-        endpoint: `posts/${id}`,
+        call: api.getPost,
+        shouldCall: !getState().entities.posts[id],
+        payload: { id },
         schema: Schemas.POST
-    }
-});
-
-export const loadPost = (id, requiredFields = []) => (dispatch, getState) =>
-    getState().entities.posts[id]
-        ? null
-        : dispatch(fetchPost(id))
-
+    })
 
 export const COMMENTS_OF_POST_REQUEST = 'COMMENTS_OF_POST_REQUEST';
 export const COMMENTS_OF_POST_SUCCESS = 'COMMENTS_OF_POST_SUCCESS';
 export const COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE';
 
-const fetchCommentsOfPost = (id) => ({
-    [CALL_API]: {
+export const loadCommentsOfPost = id => (dispatch, getState) =>
+    dispatch({
         types: [COMMENTS_OF_POST_REQUEST, COMMENTS_OF_POST_SUCCESS, COMMENTS_OF_POST_FAILURE],
-        endpoint: `posts/${id}/comments`,
+        call: api.getCommentsOfPost,
+        shouldCall: isEmpty(getState().entities.comments),
+        payload: { id },
         schema: Schemas.COMMENTS
-    }
-});
+    })
 
-export const loadCommentsOfPost = (id, requiredFields = []) => (dispatch, getState) =>
-    isEmpty(getState().entities.comments)
-        ? dispatch(fetchCommentsOfPost(id))
-        : null
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+export const addPost = (id, timestamp, title, body, author, category) => dispatch =>
+    dispatch({
+        types: [ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE],
+        call: api.addPost,
+        payload: { id, timestamp, title, body, author, category },
+    })
