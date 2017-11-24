@@ -82,5 +82,6 @@ export const addPost = post => dispatch =>
     dispatch({
         types: [ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE],
         call: api.addPost,
-        payload: post
+        payload: post,
+        schema: Schemas.POST
     })

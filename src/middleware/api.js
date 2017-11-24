@@ -13,7 +13,7 @@ export const Schemas = {
     COMMENTS: [commentSchema]
 };
 
-export default store => next => ({ types, call, payload = {}, schema, shouldCall = true }) => {
+export default store => next => async ({ types, call, payload = {}, schema, shouldCall = true }) => {
     if (!Array.isArray(types) || types.length !== 3) {
         throw new Error('Expected an array of three action types');
     }
@@ -26,27 +26,49 @@ export default store => next => ({ types, call, payload = {}, schema, shouldCall
     if (!shouldCall) {
         return;
     }
-    
+
     const [requestType, successType, failureType] = types;
     next(Object.assign({}, payload, {
         type: requestType
     }));
     
+    // Both the Promise and async/await approaches work. Use the latte for now.
 
-    return call(payload)
-        .then(response => { response.json().then(json => console.log(json))}
-    //         response.json().then(
-    //         json => response.ok ? normalize(json, schema) : Promise.reject(json)))
-    //     .then(
-    //     response => next(Object.assign({}, payload, {
-    //         type: successType,
-    //         response
-    //     })),
-    //     error => next(Object.assign({}, payload, {
-    //         type: failureType,
-    //         error: error.message || 'Something bad happened'
-    //     }))
-    );
+    // return call(payload)
+    //     .then(response =>
+    //         response.json()
+    //             .then(json =>
+    //                 response.ok ? normalize(json, schema) : Promise.reject(json)))
+    //     .then(response =>
+    //         next(Object.assign({}, payload, {
+    //             type: successType,
+    //             response
+    //         }))
+    //     )
+    //     .catch(error =>
+    //         next(Object.assign({}, payload, {
+    //             type: failureType,
+    //             error: error.message || 'Something bad happened'
+    //         }))
+    //     );
+    
+    try {
+        const response = await call(payload);
+        const json = await response.json();
+        if (response.ok) {
+            next(Object.assign({}, payload, {
+                type: successType,
+                response: normalize(json, schema)
+            }))
+        } else {
+            throw new Error(json)
+        }
+    } catch (error) {
+        next(Object.assign({}, payload, {
+            type: failureType,
+            error: error.message || 'Something bad happened'
+        }))
+    }
 }
 
 
