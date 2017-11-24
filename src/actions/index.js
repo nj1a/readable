@@ -85,3 +85,15 @@ export const addPost = post => dispatch =>
         payload: post,
         schema: Schemas.POST
     })
+
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+
+export const editPost = changedPost => dispatch =>
+    dispatch({
+        types: [EDIT_POST_REQUEST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE],
+        call: api.editPost,
+        payload: changedPost,
+        schema: Schemas.POST
+    })

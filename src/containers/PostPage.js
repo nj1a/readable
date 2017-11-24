@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { loadPost, loadCommentsOfPost } from '../actions/index';
 import Post from '../components/Post';
@@ -29,6 +30,7 @@ class PostPage extends Component {
         return (
             <div>
                 {postProps.post && <Post {...postProps} />}
+                <Link to={`/posts/${this.props.id}/edit`}>Edit Post</Link>
                 <h2>Comments</h2>
                 {Object.values(this.props.comments)
                     .filter(comment => comment.parentId === this.props.id)
