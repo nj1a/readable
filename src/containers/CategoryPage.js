@@ -14,7 +14,7 @@ class CategoryPage extends Component {
     };
 
     componentDidMount() {
-        this.props.loadCategories(['name'])
+        this.props.loadCategories()
         this.props.loadPostsOfCategory(this.props.category)
     }
 

@@ -26,24 +26,26 @@ export default store => next => ({ types, call, payload = {}, schema, shouldCall
     if (!shouldCall) {
         return;
     }
-
+    
     const [requestType, successType, failureType] = types;
     next(Object.assign({}, payload, {
         type: requestType
     }));
+    
 
-    return call(...payload)
-        .then(response => response.json().then(
-            json => response.ok ? normalize(json, schema) : Promise.reject(json)))
-        .then(
-        response => next(Object.assign({}, payload, {
-            type: successType,
-            response
-        })),
-        error => next(Object.assign({}, payload, {
-            type: failureType,
-            error: error.message || 'Something bad happened'
-        }))
+    return call(payload)
+        .then(response => { response.json().then(json => console.log(json))}
+    //         response.json().then(
+    //         json => response.ok ? normalize(json, schema) : Promise.reject(json)))
+    //     .then(
+    //     response => next(Object.assign({}, payload, {
+    //         type: successType,
+    //         response
+    //     })),
+    //     error => next(Object.assign({}, payload, {
+    //         type: failureType,
+    //         error: error.message || 'Something bad happened'
+    //     }))
     );
 }
 

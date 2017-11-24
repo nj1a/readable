@@ -78,9 +78,9 @@ export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
-export const addPost = (id, timestamp, title, body, author, category) => dispatch =>
+export const addPost = post => dispatch =>
     dispatch({
         types: [ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE],
         call: api.addPost,
-        payload: { id, timestamp, title, body, author, category },
+        payload: post
     })
