@@ -1,16 +1,16 @@
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from 'lodash/isEmpty'
 
-import { Schemas } from '../middleware/api';
+import { Schemas } from '../middleware/api'
 import * as api from '../utils/api'
 
-export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE';
+export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
 export const resetErrorMessage = () => ({
     type: RESET_ERROR_MESSAGE
-});
+})
 
-export const GET_CATEGORIES_REQUEST = 'GET_CATEGORIES_REQUEST';
-export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
-export const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE';
+export const GET_CATEGORIES_REQUEST = 'GET_CATEGORIES_REQUEST'
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS'
+export const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE'
  
 export const loadCategories = () => (dispatch, getState) => {
     dispatch({
@@ -21,9 +21,9 @@ export const loadCategories = () => (dispatch, getState) => {
     })
 }
 
-export const GET_POSTS_OF_CATEGORY_REQUEST = 'GET_POSTS_OF_CATEGORY_REQUEST';
-export const GET_POSTS_OF_CATEGORY_SUCCESS = 'GET_POSTS_OF_CATEGORY_SUCCESS';
-export const GET_POSTS_OF_CATEGORY_FAILURE = 'GET_POSTS_OF_CATEGORY_FAILURE';
+export const GET_POSTS_OF_CATEGORY_REQUEST = 'GET_POSTS_OF_CATEGORY_REQUEST'
+export const GET_POSTS_OF_CATEGORY_SUCCESS = 'GET_POSTS_OF_CATEGORY_SUCCESS'
+export const GET_POSTS_OF_CATEGORY_FAILURE = 'GET_POSTS_OF_CATEGORY_FAILURE'
 
 export const loadPostsOfCategory = category => (dispatch, getState) => {
     dispatch({
@@ -35,9 +35,9 @@ export const loadPostsOfCategory = category => (dispatch, getState) => {
     })
 }
 
-export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST';
-export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
-export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE';
+export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST'
+export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS'
+export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE'
 
 export const loadPosts = () => (dispatch, getState) =>
     dispatch({
@@ -47,9 +47,9 @@ export const loadPosts = () => (dispatch, getState) =>
         schema: Schemas.POSTS
     })
 
-export const GET_POST_REQUEST = 'GET_POST_REQUEST';
-export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
-export const GET_POST_FAILURE = 'GET_POST_FAILURE';
+export const GET_POST_REQUEST = 'GET_POST_REQUEST'
+export const GET_POST_SUCCESS = 'GET_POST_SUCCESS'
+export const GET_POST_FAILURE = 'GET_POST_FAILURE'
 
 export const loadPost = id => (dispatch, getState) =>
     dispatch({
@@ -60,9 +60,9 @@ export const loadPost = id => (dispatch, getState) =>
         schema: Schemas.POST
     })
 
-export const COMMENTS_OF_POST_REQUEST = 'COMMENTS_OF_POST_REQUEST';
-export const COMMENTS_OF_POST_SUCCESS = 'COMMENTS_OF_POST_SUCCESS';
-export const COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE';
+export const COMMENTS_OF_POST_REQUEST = 'COMMENTS_OF_POST_REQUEST'
+export const COMMENTS_OF_POST_SUCCESS = 'COMMENTS_OF_POST_SUCCESS'
+export const COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE'
 
 export const loadCommentsOfPost = id => (dispatch, getState) =>
     dispatch({
@@ -73,9 +73,9 @@ export const loadCommentsOfPost = id => (dispatch, getState) =>
         schema: Schemas.COMMENTS
     })
 
-export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
-export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
-export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST'
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS'
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE'
 
 export const addPost = post => dispatch =>
     dispatch({
@@ -85,9 +85,9 @@ export const addPost = post => dispatch =>
         schema: Schemas.POST
     })
 
-export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
-export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
-export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST'
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS'
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE'
 
 export const editPost = changedPost => dispatch =>
     dispatch({
@@ -97,9 +97,9 @@ export const editPost = changedPost => dispatch =>
         schema: Schemas.POST
     })
 
-export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
-export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
-export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST'
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE'
 
 export const deletePost = id => dispatch =>
     dispatch({
@@ -109,9 +109,9 @@ export const deletePost = id => dispatch =>
         schema: Schemas.POST
     })
 
-export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
-export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
-export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST'
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS'
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE'
 
 export const addComment = comment => dispatch =>
     dispatch({
@@ -121,9 +121,9 @@ export const addComment = comment => dispatch =>
         schema: Schemas.COMMENT
     })
 
-export const EDIT_COMMENT_REQUEST = 'EDIT_COMMENT_REQUEST';
-export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
-export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
+export const EDIT_COMMENT_REQUEST = 'EDIT_COMMENT_REQUEST'
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS'
+export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE'
 
 export const editComment = changedComment => dispatch =>
     dispatch({
@@ -133,9 +133,9 @@ export const editComment = changedComment => dispatch =>
         schema: Schemas.COMMENT
     })
 
-export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
-export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
-export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST'
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE'
 
 export const deleteComment = id => dispatch =>
     dispatch({

@@ -1,8 +1,8 @@
-import { normalize, schema } from 'normalizr';
+import { normalize, schema } from 'normalizr'
 
 const categorySchema = new schema.Entity('categories', {}, {idAttribute: 'name'})
-const postSchema = new schema.Entity('posts');
-const commentSchema = new schema.Entity('comments');
+const postSchema = new schema.Entity('posts')
+const commentSchema = new schema.Entity('comments')
 
 export const Schemas = {
     CATEGORY: categorySchema,
@@ -11,26 +11,26 @@ export const Schemas = {
     POSTS: [postSchema],
     COMMENT: commentSchema,
     COMMENTS: [commentSchema]
-};
+}
 
 export default store => next => async ({ types, call, payload = {}, schema, shouldCall = true }) => {
     if (!Array.isArray(types) || types.length !== 3) {
-        throw new Error('Expected an array of three action types');
+        throw new Error('Expected an array of three action types')
     }
     if (!types.every(type => typeof type === 'string')) {
-        throw new Error('Expected action types to be strings');
+        throw new Error('Expected action types to be strings')
     }
     if (typeof call !== 'function') {
-        throw new Error('Expected the call to be a function');
+        throw new Error('Expected the call to be a function')
     }
     if (!shouldCall) {
-        return;
+        return
     }
 
-    const [requestType, successType, failureType] = types;
+    const [requestType, successType, failureType] = types
     next(Object.assign({}, payload, {
         type: requestType
-    }));
+    }))
     
     // Both the Promise and async/await approaches work. Use the latte for now.
 
@@ -50,11 +50,11 @@ export default store => next => async ({ types, call, payload = {}, schema, shou
     //             type: failureType,
     //             error: error.message || 'Something bad happened'
     //         }))
-    //     );
+    //     )
     
     try {
-        const response = await call(payload);
-        const json = await response.json();
+        const response = await call(payload)
+        const json = await response.json()
         if (response.ok) {
             next(Object.assign({}, payload, {
                 type: successType,

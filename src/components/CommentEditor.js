@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const CommentEditor = ({ handleSubmit, comment, parentId }) =>
     <div>
@@ -24,9 +24,9 @@ CommentEditor.propTypes = {
         timestamp: PropTypes.number.isRequired,
         body: PropTypes.string.isRequired,
         author: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired,
+        voteScore: PropTypes.number.isRequired
     }),
     parentId: PropTypes.string.isRequired
 }
 
-export default CommentEditor;
+export default CommentEditor

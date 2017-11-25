@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import uuidv4 from 'uuid/v4';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import uuidv4 from 'uuid/v4'
 
-import { addPost } from '../actions';
-import PostEditor from '../components/PostEditor';
+import { addPost } from '../actions'
+import PostEditor from '../components/PostEditor'
 
 class AddPostPage extends Component {
+    static propTypes = {
+        addPost: PropTypes.func.isRequired
+    }
+
     handleSubmit = (event) => {
         event.preventDefault()
 
@@ -26,4 +31,4 @@ class AddPostPage extends Component {
     }
 }
 
-export default connect(null, { addPost })(AddPostPage);
+export default connect(null, { addPost })(AddPostPage)

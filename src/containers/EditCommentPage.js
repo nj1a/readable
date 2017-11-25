@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { editComment } from '../actions'
-import CommentEditor from '../components/CommentEditor';
+import CommentEditor from '../components/CommentEditor'
 
 class EditCommentPage extends Component {
     static propTypes = {
@@ -15,7 +15,7 @@ class EditCommentPage extends Component {
             timestamp: PropTypes.number.isRequired,
             body: PropTypes.string.isRequired,
             author: PropTypes.string.isRequired,
-            voteScore: PropTypes.number.isRequired,
+            voteScore: PropTypes.number.isRequired
         }).isRequired
     }
 
@@ -40,6 +40,6 @@ class EditCommentPage extends Component {
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
     comment: state.entities.comments[ownProps.match.params.id],
-});
+})
 
-export default connect(mapStateToProps, { editComment })(EditCommentPage);
+export default connect(mapStateToProps, { editComment })(EditCommentPage)

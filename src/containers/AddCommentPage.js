@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import uuidv4 from 'uuid/v4';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import uuidv4 from 'uuid/v4'
 
-import { addComment } from '../actions';
-import CommentEditor from '../components/CommentEditor';
+import { addComment } from '../actions'
+import CommentEditor from '../components/CommentEditor'
 
 class AddCommentPage extends Component {
-    handleSubmit = (event) => {
+    static propTypes = {
+        addComment: PropTypes.func.isRequired
+    }
+
+    handleSubmit = event => {
         event.preventDefault()
 
         // FormData's instancem method entries() returns an iterator, and it
@@ -26,4 +31,4 @@ class AddCommentPage extends Component {
     }
 }
 
-export default connect(null, { addComment })(AddCommentPage);
+export default connect(null, { addComment })(AddCommentPage)

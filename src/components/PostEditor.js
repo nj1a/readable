@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const PostEditor = ({ handleSubmit, post }) =>
     <div>
@@ -28,7 +28,8 @@ PostEditor.propTypes = {
         author: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         voteScore: PropTypes.number.isRequired,
+        commentCount: PropTypes.number.isRequired
     })
 }
 
-export default PostEditor;
+export default PostEditor

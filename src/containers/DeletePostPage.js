@@ -1,16 +1,21 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import { deletePost } from '../actions';
+import { deletePost } from '../actions'
 
 class DeletePostPage extends Component {
+    static propTypes = {
+        deletePost: PropTypes.func.isRequired
+    }
+
     componentDidMount() {
-        this.props.deletePost(this.props.match.params.id);
+        this.props.deletePost(this.props.match.params.id)
     }
 
     render() {
-        return null;
+        return null
     }
 }
 
-export default connect(null, { deletePost })(DeletePostPage);
+export default connect(null, { deletePost })(DeletePostPage)

@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Post = ({ loadingLabel, post }) =>
     <div>
@@ -21,7 +21,8 @@ Post.protoTypes = {
         author: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         voteScore: PropTypes.number.isRequired,
+        commentCount: PropTypes.number.isRequired
     }).isRequired,
 }
 
-export default Post;
+export default Post

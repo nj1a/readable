@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Comment = ({ loadingLabel, comment }) =>
     <div>
@@ -17,8 +17,8 @@ Comment.protoTypes = {
         timestamp: PropTypes.number.isRequired,
         body: PropTypes.string.isRequired,
         author: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired,
+        voteScore: PropTypes.number.isRequired
     }).isRequired,
 }
 
-export default Comment;
+export default Comment

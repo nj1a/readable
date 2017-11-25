@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { loadPost, loadCommentsOfPost } from '../actions/index';
-import Post from '../components/Post';
-import Comment from '../components/Comment';
+import { loadPost, loadCommentsOfPost } from '../actions/index'
+import Post from '../components/Post'
+import Comment from '../components/Comment'
 
 
 class PostPage extends Component {
     static propTypes = {
         loadPost: PropTypes.func.isRequired,
         loadCommentsOfPost: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
         post: PropTypes.PropTypes.shape({
             id: PropTypes.string.isRequired,
             timestamp: PropTypes.number.isRequired,
@@ -20,10 +21,19 @@ class PostPage extends Component {
             author: PropTypes.string.isRequired,
             category: PropTypes.string.isRequired,
             voteScore: PropTypes.number.isRequired,
+            commentCount: PropTypes.number.isRequired
         }).isRequired,
-        id: PropTypes.string.isRequired,
-        comments: PropTypes.object.isRequired
-    };
+        comments: PropTypes.arrayOf(
+            PropTypes.PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                parentId: PropTypes.string.isRequired,
+                timestamp: PropTypes.number.isRequired,
+                body: PropTypes.string.isRequired,
+                author: PropTypes.string.isRequired,
+                voteScore: PropTypes.number.isRequired
+            })
+        ).isRequired
+    }
 
     componentDidMount() {
         this.props.loadPost(this.props.id)
@@ -31,7 +41,7 @@ class PostPage extends Component {
     }
 
     render() {
-        const { id, comments, post } = this.props;
+        const { id, comments, post } = this.props
         const postProps = {
             post,
             loadingLabel: "Loading..."
@@ -62,9 +72,9 @@ const mapStateToProps = (state, ownProps) => ({
     comments: Object.values(state.entities.comments)
         .filter(comment => comment.parentId === ownProps.match.params.id)
         .sort((a, b) => b.voteScore - a.voteScore)
-});
+})
 
 export default connect(mapStateToProps, {
     loadPost,
     loadCommentsOfPost
-})(PostPage);
+})(PostPage)

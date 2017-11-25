@@ -1,14 +1,14 @@
-import React from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import React from 'react'
+import { Route, Link, Switch } from 'react-router-dom'
 
-import App from './App';
-import CategoryPage from './CategoryPage';
-import PostPage from './PostPage';
-import EditPostPage from './EditPostPage';
-import DeletePostPage from './DeletePostPage';
-import AddPostPage from './AddPostPage';
-import AddCommentPage from './AddCommentPage';
-import EditCommentPage from './EditCommentPage';
+import App from './App'
+import CategoryPage from './CategoryPage'
+import PostPage from './PostPage'
+import EditPostPage from './EditPostPage'
+import DeletePostPage from './DeletePostPage'
+import AddPostPage from './AddPostPage'
+import AddCommentPage from './AddCommentPage'
+import EditCommentPage from './EditCommentPage'
 import DeleteCommentPage from './DeleteCommentPage'
 
 const Root = () => (
@@ -29,4 +29,4 @@ const Root = () => (
     </div>
 )
 
-export default Root;
+export default Root

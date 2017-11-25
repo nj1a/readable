@@ -1,17 +1,33 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import { loadCategories, loadPostsOfCategory } from '../actions/index';
-import Category from '../components/Category';
+import { loadCategories, loadPostsOfCategory } from '../actions/index'
+import Category from '../components/Category'
 
 class CategoryPage extends Component {
     static propTypes = {
-        categories: PropTypes.object.isRequired,
         loadCategories: PropTypes.func.isRequired,
         loadPostsOfCategory: PropTypes.func.isRequired,
-        posts: PropTypes.object.isRequired
-    };
+        categories: PropTypes.arrayOf(
+            PropTypes.shape({
+                name: PropTypes.string.isRequired,
+                path: PropTypes.string.isRequired
+            })
+        ).isRequired,
+        posts: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                timestamp: PropTypes.number.isRequired,
+                title: PropTypes.string.isRequired,
+                body: PropTypes.string.isRequired,
+                author: PropTypes.string.isRequired,
+                category: PropTypes.string.isRequired,
+                voteScore: PropTypes.number.isRequired,
+                commentCount: PropTypes.number.isRequired
+            })
+        ).isRequired
+    }
 
     componentDidMount() {
         this.props.loadCategories()
@@ -28,17 +44,19 @@ class CategoryPage extends Component {
         }
         return (
             <Category {...props} />
-        );
+        )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     category: ownProps.match.params.category,
-    categories: state.entities.categories,
-    posts: Object.values(state.entities.posts).filter(post => post.category === ownProps.match.params.category)
-});
+    categories: Object.values(state.entities.categories),
+    posts: Object.values(state.entities.posts)
+        .filter(post => post.category === ownProps.match.params.category)
+        .sort((a, b) => b.voteScore - a.voteScore)
+})
 
 export default connect(mapStateToProps, {
     loadCategories,
     loadPostsOfCategory
-})(CategoryPage);
+})(CategoryPage)

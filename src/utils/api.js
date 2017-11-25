@@ -1,6 +1,6 @@
 const api_root = 'http://localhost:3001'
 const headers = { Authorization: 'ashtrg43sf' }
-const bodyHeaders = { ...headers, 'Content-Type': 'application/json' };
+const bodyHeaders = { ...headers, 'Content-Type': 'application/json' }
 
 export const getAllCategories = () => fetch(`${api_root}/categories`, { headers })
 

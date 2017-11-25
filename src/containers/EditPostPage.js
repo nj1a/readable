@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { editPost } from '../actions'
-import PostEditor from '../components/PostEditor';
+import PostEditor from '../components/PostEditor'
 
 class EditPostPage extends Component {
     static propTypes = {
@@ -17,6 +17,7 @@ class EditPostPage extends Component {
             author: PropTypes.string.isRequired,
             category: PropTypes.string.isRequired,
             voteScore: PropTypes.number.isRequired,
+            commentCount: PropTypes.number.isRequired
         }).isRequired
     }
 
@@ -41,6 +42,6 @@ class EditPostPage extends Component {
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
     post: state.entities.posts[ownProps.match.params.id],
-});
+})
 
-export default connect(mapStateToProps, { editPost })(EditPostPage);
+export default connect(mapStateToProps, { editPost })(EditPostPage)
