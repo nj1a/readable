@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 const Post = ({ loadingLabel, post }) =>
     <div>
-        <h1>{post.title}</h1>
-        <h3>Author: {post.author}</h3>
-        <h3>Category: {post.category}</h3>
-        <h3>Rating: {post.voteScore}</h3>
-        <h3>Time created: {(new Date(post.timestamp)).toDateString()}</h3>
-        <h2>{post.body}</h2>
+        <h3>{post.title}</h3>
+        <h4>Author: {post.author}</h4>
+        <h4>Category: {post.category}</h4>
+        <h4>Rating: {post.voteScore}</h4>
+        <h4>Time created: {(new Date(post.timestamp)).toDateString()}</h4>
+        <h3>{post.body}</h3>
     </div>
 
 Post.protoTypes = {

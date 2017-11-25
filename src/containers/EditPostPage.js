@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { editPost } from '../actions'
-import Editor from '../components/Editor';
+import PostEditor from '../components/PostEditor';
 
-class EditPage extends Component {
+class EditPostPage extends Component {
     static propTypes = {
         editPost: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
@@ -31,7 +31,7 @@ class EditPage extends Component {
 
     render() {
         return (
-            <Editor handleSubmit={this.handleSubmit} post={this.props.posts[this.props.id]} />
+            <PostEditor handleSubmit={this.handleSubmit} post={this.props.posts[this.props.id]} />
         )
     }
 }
@@ -41,4 +41,4 @@ const mapStateToProps = (state, ownProps) => ({
     posts: state.entities.posts,
 });
 
-export default connect(mapStateToProps, { editPost })(EditPage);
+export default connect(mapStateToProps, { editPost })(EditPostPage);

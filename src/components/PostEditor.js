@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Editor = ({ handleSubmit, post }) =>
+const PostEditor = ({ handleSubmit, post }) =>
     <div>
         <p>{post ? 'Edit' : 'Add'} a Post:</p>
         <form onSubmit={handleSubmit}>
@@ -18,9 +18,17 @@ const Editor = ({ handleSubmit, post }) =>
     </div>
 
 
-Editor.propTypes = {
+PostEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    post: PropTypes.object
+    post: PropTypes.PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        timestamp: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        category: PropTypes.string.isRequired,
+        voteScore: PropTypes.number.isRequired,
+    })
 }
 
-export default Editor;
+export default PostEditor;

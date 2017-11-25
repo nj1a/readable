@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 
 import { addPost } from '../actions';
-import Editor from '../components/Editor';
+import PostEditor from '../components/PostEditor';
 
-class AddPage extends Component {
+class AddPostPage extends Component {
     handleSubmit = (event) => {
         event.preventDefault()
 
@@ -21,9 +21,9 @@ class AddPage extends Component {
 
     render() {
         return (
-            <Editor handleSubmit={this.handleSubmit} />
+            <PostEditor handleSubmit={this.handleSubmit} />
         )
     }
 }
 
-export default connect(null, { addPost })(AddPage);
+export default connect(null, { addPost })(AddPostPage);

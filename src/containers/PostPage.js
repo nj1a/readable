@@ -31,9 +31,11 @@ class PostPage extends Component {
             <div>
                 {postProps.post && <Post {...postProps} />}
                 <Link to={`/posts/${this.props.id}/edit`}>Edit Post</Link>
+                <Link to={`/posts/${this.props.id}/delete`}>Delete Post</Link>
                 <h2>Comments</h2>
                 {Object.values(this.props.comments)
                     .filter(comment => comment.parentId === this.props.id)
+                    .sort((a, b) => b.voteScore - a.voteScore)
                     .map(comment => <Comment key={comment.id} comment={comment} loadingLabel='Loading...' />)}
             </div>    
 

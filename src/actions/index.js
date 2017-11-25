@@ -97,3 +97,15 @@ export const editPost = changedPost => dispatch =>
         payload: changedPost,
         schema: Schemas.POST
     })
+
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+export const deletePost = id => dispatch =>
+    dispatch({
+        types: [DELETE_POST_REQUEST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE],
+        call: api.deletePost,
+        payload: { id },
+        schema: Schemas.POST
+    })
