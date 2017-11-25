@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { editPost } from '../actions'
-import PostEditor from '../components/PostEditor';
+import { editComment } from '../actions'
+import CommentEditor from '../components/CommentEditor';
 
-class EditPostPage extends Component {
+class EditCommentPage extends Component {
     static propTypes = {
-        editPost: PropTypes.func.isRequired,
+        editComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        post: PropTypes.PropTypes.shape({
+        comment: PropTypes.PropTypes.shape({
             id: PropTypes.string.isRequired,
+            parentId: PropTypes.string.isRequired,
             timestamp: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
             body: PropTypes.string.isRequired,
             author: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
             voteScore: PropTypes.number.isRequired,
         }).isRequired
     }
@@ -24,23 +23,23 @@ class EditPostPage extends Component {
         event.preventDefault()
 
         const data = new FormData(event.target)
-        this.props.editPost({
+        this.props.editComment({
             id: this.props.id,
-            title: data.get('title'),
             body: data.get('body')
         })
     }
 
     render() {
         return (
-            <PostEditor handleSubmit={this.handleSubmit} post={this.props.post} />
+            <CommentEditor handleSubmit={this.handleSubmit} comment={this.props.comment}
+                parentId={this.props.comment.parentId} />
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
-    post: state.entities.posts[ownProps.match.params.id],
+    comment: state.entities.comments[ownProps.match.params.id],
 });
 
-export default connect(mapStateToProps, { editPost })(EditPostPage);
+export default connect(mapStateToProps, { editComment })(EditCommentPage);

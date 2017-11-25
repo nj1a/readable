@@ -12,7 +12,15 @@ class PostPage extends Component {
     static propTypes = {
         loadPost: PropTypes.func.isRequired,
         loadCommentsOfPost: PropTypes.func.isRequired,
-        posts: PropTypes.object.isRequired,
+        post: PropTypes.PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            timestamp: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            body: PropTypes.string.isRequired,
+            author: PropTypes.string.isRequired,
+            category: PropTypes.string.isRequired,
+            voteScore: PropTypes.number.isRequired,
+        }).isRequired,
         id: PropTypes.string.isRequired,
         comments: PropTypes.object.isRequired
     };
@@ -23,30 +31,37 @@ class PostPage extends Component {
     }
 
     render() {
+        const { id, comments, post } = this.props;
         const postProps = {
-            post: this.props.posts[this.props.id],
+            post,
             loadingLabel: "Loading..."
         }
+        
         return (
             <div>
                 {postProps.post && <Post {...postProps} />}
-                <Link to={`/posts/${this.props.id}/edit`}>Edit Post</Link>
-                <Link to={`/posts/${this.props.id}/delete`}>Delete Post</Link>
+                <Link to={`/posts/${id}/edit`}>Edit Post</Link>
+                <Link to={`/posts/${id}/delete`}>Delete Post</Link>
+                <Link to={`/posts/${id}/comments/add`}>Add Comment</Link>
                 <h2>Comments</h2>
-                {Object.values(this.props.comments)
-                    .filter(comment => comment.parentId === this.props.id)
-                    .sort((a, b) => b.voteScore - a.voteScore)
-                    .map(comment => <Comment key={comment.id} comment={comment} loadingLabel='Loading...' />)}
+                {comments.map(comment => (
+                    <div key={comment.id}>
+                        <Comment comment={comment} loadingLabel='Loading...' />
+                        <Link to={`/comments/${comment.id}/edit`}>Edit Comment</Link>
+                        <Link to={`/comments/${comment.id}/delete`}>Delete Comment</Link>
+                    </div>
+                ))}
             </div>    
-
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
-    posts: state.entities.posts,
-    comments: state.entities.comments
+    post: state.entities.posts[ownProps.match.params.id],
+    comments: Object.values(state.entities.comments)
+        .filter(comment => comment.parentId === ownProps.match.params.id)
+        .sort((a, b) => b.voteScore - a.voteScore)
 });
 
 export default connect(mapStateToProps, {

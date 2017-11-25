@@ -22,7 +22,7 @@ class CategoryPage extends Component {
         const props = {
             title: this.props.category,
             categories: this.props.categories,
-            posts: Object.values(this.props.posts).filter(post => post.category === this.props.category),
+            posts: this.props.posts,
             category: this.props.category,
             loadiingLabel: "Loading..."
         }
@@ -35,7 +35,7 @@ class CategoryPage extends Component {
 const mapStateToProps = (state, ownProps) => ({
     category: ownProps.match.params.category,
     categories: state.entities.categories,
-    posts: state.entities.posts
+    posts: Object.values(state.entities.posts).filter(post => post.category === ownProps.match.params.category)
 });
 
 export default connect(mapStateToProps, {

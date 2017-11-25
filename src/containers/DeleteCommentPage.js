@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { deletePost } from '../actions';
+import { deleteComment } from '../actions';
 
 class DeletePostPage extends Component {
     componentDidMount() {
-        this.props.deletePost(this.props.match.params.id);
+        this.props.deleteComment(this.props.match.params.id);
     }
 
     render() {
@@ -13,4 +13,4 @@ class DeletePostPage extends Component {
     }
 }
 
-export default connect(null, { deletePost })(DeletePostPage);
+export default connect(null, { deleteComment })(DeletePostPage);

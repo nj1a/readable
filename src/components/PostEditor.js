@@ -13,7 +13,7 @@ const PostEditor = ({ handleSubmit, post }) =>
             <input id="category" name="category" disabled={post} value={post && post.category} /><br />
             <label htmlFor="body">Body: </label>
             <input id="body" name="body" defaultValue={post && post.body} /><br />
-            <button>Go!</button>
+            <button>{post ? 'Edit' : 'Add'} Post</button>
         </form>    
     </div>
 

@@ -8,26 +8,26 @@ export const resetErrorMessage = () => ({
     type: RESET_ERROR_MESSAGE
 });
 
-export const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST';
-export const CATEGORIES_SUCCESS = 'CATEGORIES_SUCCESS';
-export const CATEGORIES_FAILURE = 'CATEGORIES_FAILURE';
+export const GET_CATEGORIES_REQUEST = 'GET_CATEGORIES_REQUEST';
+export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
+export const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE';
  
 export const loadCategories = () => (dispatch, getState) => {
     dispatch({
-        types: [CATEGORIES_REQUEST, CATEGORIES_SUCCESS, CATEGORIES_FAILURE],
+        types: [GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE],
         call: api.getAllCategories,
         shouldCall: isEmpty(getState().entities.categories),
         schema: Schemas.CATEGORIES
     })
 }
 
-export const POSTS_OF_CATEGORY_REQUEST = 'POSTS_OF_CATEGORY_REQUEST';
-export const POSTS_OF_CATEGORY_SUCCESS = 'POSTS_OF_CATEGORY_SUCCESS';
-export const POSTS_OF_CATEGORY_FAILURE = 'POSTS_OF_CATEGORY_FAILURE';
+export const GET_POSTS_OF_CATEGORY_REQUEST = 'GET_POSTS_OF_CATEGORY_REQUEST';
+export const GET_POSTS_OF_CATEGORY_SUCCESS = 'GET_POSTS_OF_CATEGORY_SUCCESS';
+export const GET_POSTS_OF_CATEGORY_FAILURE = 'GET_POSTS_OF_CATEGORY_FAILURE';
 
 export const loadPostsOfCategory = category => (dispatch, getState) => {
     dispatch({
-        types: [POSTS_OF_CATEGORY_REQUEST, POSTS_OF_CATEGORY_SUCCESS, POSTS_OF_CATEGORY_FAILURE],
+        types: [GET_POSTS_OF_CATEGORY_REQUEST, GET_POSTS_OF_CATEGORY_SUCCESS, GET_POSTS_OF_CATEGORY_FAILURE],
         call: api.getPostsOfCategory,
         shouldCall: isEmpty(getState().entities.categories),
         payload: { category },
@@ -35,26 +35,25 @@ export const loadPostsOfCategory = category => (dispatch, getState) => {
     })
 }
 
-export const POSTS_REQUEST = 'POSTS_REQUEST';
-export const POSTS_SUCCESS = 'POSTS_SUCCESS';
-export const POSTS_FAILURE = 'POSTS_FAILURE';
+export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST';
+export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
+export const GET_POSTS_FAILURE = 'GET_POSTS_FAILURE';
 
-export const loadPosts = () => (dispatch, getState) => {
+export const loadPosts = () => (dispatch, getState) =>
     dispatch({
-        types: [POSTS_REQUEST, POSTS_SUCCESS, POSTS_FAILURE],
+        types: [GET_POSTS_REQUEST, GET_POSTS_SUCCESS, GET_POSTS_FAILURE],
         call: api.getAllPosts,
         shouldCall: isEmpty(getState().entities.posts),
         schema: Schemas.POSTS
     })
-}
 
-export const POST_REQUEST = 'POST_REQUEST';
-export const POST_SUCCESS = 'POST_SUCCESS';
-export const POST_FAILURE = 'POST_FAILURE';
+export const GET_POST_REQUEST = 'GET_POST_REQUEST';
+export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
+export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 
 export const loadPost = id => (dispatch, getState) =>
     dispatch({
-        types: [POST_REQUEST, POST_SUCCESS, POST_FAILURE],
+        types: [GET_POST_REQUEST, GET_POST_SUCCESS, GET_POST_FAILURE],
         call: api.getPost,
         shouldCall: !getState().entities.posts[id],
         payload: { id },
@@ -108,4 +107,40 @@ export const deletePost = id => dispatch =>
         call: api.deletePost,
         payload: { id },
         schema: Schemas.POST
+    })
+
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+export const addComment = comment => dispatch =>
+    dispatch({
+        types: [ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE],
+        call: api.addComment,
+        payload: comment,
+        schema: Schemas.COMMENT
+    })
+
+export const EDIT_COMMENT_REQUEST = 'EDIT_COMMENT_REQUEST';
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
+export const EDIT_COMMENT_FAILURE = 'EDIT_COMMENT_FAILURE';
+
+export const editComment = changedComment => dispatch =>
+    dispatch({
+        types: [EDIT_COMMENT_REQUEST, EDIT_COMMENT_SUCCESS, EDIT_COMMENT_FAILURE],
+        call: api.editComment,
+        payload: changedComment,
+        schema: Schemas.COMMENT
+    })
+
+export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
+export const deleteComment = id => dispatch =>
+    dispatch({
+        types: [DELETE_COMMENT_REQUEST, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE],
+        call: api.deleteComment,
+        payload: { id },
+        schema: Schemas.COMMENT
     })
