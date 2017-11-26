@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { loadPost, loadCommentsOfPost } from '../actions/index'
+import { loadPost, loadCommentsOfPost, votePost, voteComment } from '../actions/index'
 import Post from '../components/Post'
 import Comment from '../components/Comment'
-
 
 class PostPage extends Component {
     static propTypes = {
         loadPost: PropTypes.func.isRequired,
         loadCommentsOfPost: PropTypes.func.isRequired,
+        votePost: PropTypes.func.isRequired,
+        voteComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
         post: PropTypes.PropTypes.shape({
             id: PropTypes.string.isRequired,
@@ -35,6 +36,13 @@ class PostPage extends Component {
         ).isRequired
     }
 
+    // use partial application to generalize the vote handler
+    handleVote = (type, id) => option => () => {
+        type === 'post'
+            ? this.props.votePost({ id, option })
+            : this.props.voteComment({ id, option })
+    }
+
     componentDidMount() {
         this.props.loadPost(this.props.id)
         this.props.loadCommentsOfPost(this.props.id)
@@ -44,6 +52,7 @@ class PostPage extends Component {
         const { id, comments, post } = this.props
         const postProps = {
             post,
+            handleVote: this.handleVote('post', id),
             loadingLabel: "Loading..."
         }
         
@@ -56,7 +65,8 @@ class PostPage extends Component {
                 <h2>Comments</h2>
                 {comments.map(comment => (
                     <div key={comment.id}>
-                        <Comment comment={comment} loadingLabel='Loading...' />
+                        <Comment comment={comment} loadingLabel='Loading...'
+                            handleVote={this.handleVote('comment', comment.id)} />
                         <Link to={`/comments/${comment.id}/edit`}>Edit Comment</Link>
                         <Link to={`/comments/${comment.id}/delete`}>Delete Comment</Link>
                     </div>
@@ -76,5 +86,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
     loadPost,
-    loadCommentsOfPost
+    loadCommentsOfPost,
+    votePost,
+    voteComment
 })(PostPage)

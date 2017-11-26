@@ -8,7 +8,7 @@ export const getPostsOfCategory = ({ category }) => fetch(`${api_root}/${categor
 
 export const getAllPosts = () => fetch(`${api_root}/posts`, { headers })
 
-export const addPost = (post) =>
+export const addPost = post =>
     fetch(`${api_root}/posts`, {
         method: 'POST',
         headers: bodyHeaders,
@@ -39,7 +39,7 @@ export const deletePost = ({ id }) =>
 
 export const getCommentsOfPost = ({ id }) => fetch(`${api_root}/posts/${id}/comments`, { headers })
 
-export const addComment = (comment) =>
+export const addComment = comment =>
     fetch(`${api_root}/comments`, {
         method: 'POST',
         headers: bodyHeaders,

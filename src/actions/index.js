@@ -60,13 +60,13 @@ export const loadPost = id => (dispatch, getState) =>
         schema: Schemas.POST
     })
 
-export const COMMENTS_OF_POST_REQUEST = 'COMMENTS_OF_POST_REQUEST'
-export const COMMENTS_OF_POST_SUCCESS = 'COMMENTS_OF_POST_SUCCESS'
-export const COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE'
+export const GET_COMMENTS_OF_POST_REQUEST = 'GET_COMMENTS_OF_POST_REQUEST'
+export const GET_COMMENTS_OF_POST_SUCCESS = 'GET_COMMENTS_OF_POST_SUCCESS'
+export const GET_COMMENTS_OF_POST_FAILURE = 'COMMENTS_OF_POST_FAILURE'
 
 export const loadCommentsOfPost = id => (dispatch, getState) =>
     dispatch({
-        types: [COMMENTS_OF_POST_REQUEST, COMMENTS_OF_POST_SUCCESS, COMMENTS_OF_POST_FAILURE],
+        types: [GET_COMMENTS_OF_POST_REQUEST, GET_COMMENTS_OF_POST_SUCCESS, GET_COMMENTS_OF_POST_FAILURE],
         call: api.getCommentsOfPost,
         shouldCall: isEmpty(getState().entities.comments),
         payload: { id },
@@ -94,6 +94,18 @@ export const editPost = changedPost => dispatch =>
         types: [EDIT_POST_REQUEST, EDIT_POST_SUCCESS, EDIT_POST_FAILURE],
         call: api.editPost,
         payload: changedPost,
+        schema: Schemas.POST
+    })
+
+export const VOTE_POST_REQUEST = 'VOTE_POST_REQUEST'
+export const VOTE_POST_SUCCESS = 'VOTE_POST_SUCCESS'
+export const VOTE_POST_FAILURE = 'VOTE_POST_FAILURE'
+
+export const votePost = ({id, option}) => dispatch =>
+    dispatch({
+        types: [VOTE_POST_REQUEST, VOTE_POST_SUCCESS, VOTE_POST_FAILURE],
+        call: api.votePost,
+        payload: { id, option },
         schema: Schemas.POST
     })
 
@@ -142,5 +154,17 @@ export const deleteComment = id => dispatch =>
         types: [DELETE_COMMENT_REQUEST, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE],
         call: api.deleteComment,
         payload: { id },
+        schema: Schemas.COMMENT
+    })
+
+export const VOTE_COMMENT_REQUEST = 'VOTE_COMMENT_REQUEST'
+export const VOTE_COMMENT_SUCCESS = 'VOTE_COMMENT_SUCCESS'
+export const VOTE_COMMENT_FAILURE = 'VOTE_COMMENT_FAILURE'
+
+export const voteComment = ({ id, option }) => dispatch =>
+    dispatch({
+        types: [VOTE_COMMENT_REQUEST, VOTE_COMMENT_SUCCESS, VOTE_COMMENT_FAILURE],
+        call: api.voteComment,
+        payload: { id, option },
         schema: Schemas.COMMENT
     })
