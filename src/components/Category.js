@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import isEmpty from 'lodash/isEmpty'
+import Button from 'material-ui-next/Button'
 
 const Category = ({ title, categories, loadingLabel, posts, category }) => 
     <div>
@@ -11,12 +12,12 @@ const Category = ({ title, categories, loadingLabel, posts, category }) =>
             {isEmpty(categories)
                 ? <h2><i>{loadingLabel}</i></h2>
                 : categories.map(category =>
-                    <Link key={category.name} to={`/${category.path}/posts`}>{category.name}</Link>
+                    <Button component={Link} key={category.name} to={`/${category.path}/posts`}>{category.name}</Button>
                 )}
             <h3>All Posts</h3>
             <ul>
                 {posts.map(post =>
-                    <Link key={post.id} to={`/posts/${post.id}`}>{post.title}</Link>)}
+                    <Button component={Link} key={post.id} to={`/posts/${post.id}`}>{post.title}</Button>)}
             </ul>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
+import TopAppBar from './TopAppBar'
 import App from './App'
 import CategoryPage from './CategoryPage'
 import PostPage from './PostPage'
@@ -12,8 +13,9 @@ import EditCommentPage from './EditCommentPage'
 import DeleteCommentPage from './DeleteCommentPage'
 
 const Root = () => (
-    <div className="app">
-        <Switch>  {/* make sure only one Route is matched */}
+    <div>
+        <TopAppBar />
+        <Switch>
             <Route exact path='/' component={App} />
             <Route exact path='/:category/posts' component={CategoryPage} />
             <Route exact path='/posts/add' component={AddPostPage} />
@@ -24,8 +26,6 @@ const Root = () => (
             <Route exact path='/comments/:id/edit' component={EditCommentPage} />
             <Route exact path='/comments/:id/delete' component={DeleteCommentPage} />
         </Switch>
-        <Link to='/posts/add'>Add Post</Link>
-        <Link to='/'>Return to Home Page</Link>
     </div>
 )
 

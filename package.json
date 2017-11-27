@@ -1,8 +1,12 @@
 {
   "name": "readable",
   "version": "0.1.0",
+  "repository": "njia95/readable",
+  "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-beta.21",
+    "material-ui-icons": "^1.0.0-beta.17",
     "material-ui-next": "^1.0.0-beta.20",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",

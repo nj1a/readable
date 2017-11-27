@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from 'material-ui-next/Button'
 
 const Comment = ({ loadingLabel, comment, handleVote}) =>
     <div>
         <h4>Author: {comment.author}</h4>
         <h4>Rating: {comment.voteScore}</h4>
-        <button onClick={handleVote('upVote')}>Upvote</button>
-        <button onClick={handleVote('downVote')}>Downvote</button>
+        <Button raised color="primary" onClick={handleVote('upVote')}>Upvote</Button>
+        <Button raised color="primary" onClick={handleVote('downVote')}>Downvote</Button>
         <h4>Time created: {(new Date(comment.timestamp)).toDateString()}</h4>
         <h3>{comment.body}</h3>
     </div>

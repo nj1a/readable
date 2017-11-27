@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Button from 'material-ui-next/Button'
 
 import { loadPost, loadCommentsOfPost, votePost, voteComment } from '../actions/index'
 import Post from '../components/Post'
@@ -59,16 +60,16 @@ class PostPage extends Component {
         return (
             <div>
                 {postProps.post && <Post {...postProps} />}
-                <Link to={`/posts/${id}/edit`}>Edit Post</Link>
-                <Link to={`/posts/${id}/delete`}>Delete Post</Link>
-                <Link to={`/posts/${id}/comments/add`}>Add Comment</Link>
+                <Button component={Link} to={`/posts/${id}/edit`}>Edit Post</Button>
+                <Button component={Link} to={`/posts/${id}/delete`}>Delete Post</Button>
+                <Button component={Link} to={`/posts/${id}/comments/add`}>Add Comment</Button>
                 <h2>Comments</h2>
                 {comments.map(comment => (
                     <div key={comment.id}>
                         <Comment comment={comment} loadingLabel='Loading...'
                             handleVote={this.handleVote('comment', comment.id)} />
-                        <Link to={`/comments/${comment.id}/edit`}>Edit Comment</Link>
-                        <Link to={`/comments/${comment.id}/delete`}>Delete Comment</Link>
+                        <Button component={Link} to={`/comments/${comment.id}/edit`}>Edit Comment</Button>
+                        <Button component={Link} to={`/comments/${comment.id}/delete`}>Delete Comment</Button>
                     </div>
                 ))}
             </div>    

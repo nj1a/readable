@@ -36,7 +36,7 @@ class App extends Component {
 
     render() {
         const props = {
-            title: "Readable",
+            title: "All Posts",
             categories: this.props.categories,
             posts: this.props.posts,
             category: this.props.category,

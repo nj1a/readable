@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from 'material-ui-next/Button'
 
 const CommentEditor = ({ handleSubmit, comment, parentId }) =>
     <div>
@@ -11,7 +12,7 @@ const CommentEditor = ({ handleSubmit, comment, parentId }) =>
             <input id="author" name="author" disabled={comment} value={comment && comment.author} /><br />
             <label htmlFor="body">Body: </label>
             <input id="body" name="body" defaultValue={comment && comment.body} /><br />
-            <button>{comment ? 'Edit' : 'Add'} Comment</button>
+            <Button raised color="primary">{comment ? 'Edit' : 'Add'}</Button>
         </form>
     </div>
 
