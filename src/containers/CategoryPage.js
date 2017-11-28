@@ -4,22 +4,12 @@ import { connect } from 'react-redux'
 
 import { loadPostsOfCategory } from '../actions/index'
 import Category from '../components/Category'
+import * as types from '../utils/PropTypes'
 
 class CategoryPage extends Component {
     static propTypes = {
         loadPostsOfCategory: PropTypes.func.isRequired,
-        posts: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                timestamp: PropTypes.number.isRequired,
-                title: PropTypes.string.isRequired,
-                body: PropTypes.string.isRequired,
-                author: PropTypes.string.isRequired,
-                category: PropTypes.string.isRequired,
-                voteScore: PropTypes.number.isRequired,
-                commentCount: PropTypes.number.isRequired
-            })
-        ).isRequired
+        posts: types.posts.isRequired
     }
 
     componentDidMount() {

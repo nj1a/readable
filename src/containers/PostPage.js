@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import Button from 'material-ui-next/Button'
 
 import { loadPost, loadCommentsOfPost, votePost, voteComment } from '../actions/index'
 import Post from '../components/Post'
 import Comment from '../components/Comment'
+import * as types from '../utils/PropTypes'
 
 class PostPage extends Component {
     static propTypes = {
@@ -15,26 +14,8 @@ class PostPage extends Component {
         votePost: PropTypes.func.isRequired,
         voteComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        post: PropTypes.PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            timestamp: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            author: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
-            voteScore: PropTypes.number.isRequired,
-            commentCount: PropTypes.number.isRequired
-        }).isRequired,
-        comments: PropTypes.arrayOf(
-            PropTypes.PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                parentId: PropTypes.string.isRequired,
-                timestamp: PropTypes.number.isRequired,
-                body: PropTypes.string.isRequired,
-                author: PropTypes.string.isRequired,
-                voteScore: PropTypes.number.isRequired
-            })
-        ).isRequired
+        post: types.post,
+        comments: types.comments.isRequired
     }
 
     // use partial application to generalize the vote handler
@@ -60,16 +41,11 @@ class PostPage extends Component {
         return (
             <div>
                 {postProps.post && <Post {...postProps} />}
-                <Button component={Link} to={`/posts/${id}/edit`}>Edit Post</Button>
-                <Button component={Link} to={`/posts/${id}/delete`}>Delete Post</Button>
-                <Button component={Link} to={`/posts/${id}/comments/add`}>Add Comment</Button>
                 <h2>Comments</h2>
                 {comments.map(comment => (
                     <div key={comment.id}>
                         <Comment comment={comment} loadingLabel='Loading...'
                             handleVote={this.handleVote('comment', comment.id)} />
-                        <Button component={Link} to={`/comments/${comment.id}/edit`}>Edit Comment</Button>
-                        <Button component={Link} to={`/comments/${comment.id}/delete`}>Delete Comment</Button>
                     </div>
                 ))}
             </div>    

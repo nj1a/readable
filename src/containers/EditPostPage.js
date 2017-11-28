@@ -4,21 +4,13 @@ import { connect } from 'react-redux'
 
 import { editPost } from '../actions'
 import PostEditor from '../components/PostEditor'
+import * as types from '../utils/PropTypes'
 
 class EditPostPage extends Component {
     static propTypes = {
         editPost: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        post: PropTypes.PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            timestamp: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            author: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
-            voteScore: PropTypes.number.isRequired,
-            commentCount: PropTypes.number.isRequired
-        }).isRequired
+        post: types.post.isRequired
     }
 
     handleSubmit = event => {

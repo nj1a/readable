@@ -1,26 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui-next/Button'
+import Button from 'material-ui/Button'
+import { Link } from 'react-router-dom'
+import Card, { CardContent, CardHeader } from 'material-ui/Card'
+import Typography from 'material-ui/Typography'
+import Avatar from 'material-ui/Avatar'
+import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
+import ModeEdit from 'material-ui-icons/ModeEdit'
+import Delete from 'material-ui-icons/Delete'
 
-const Comment = ({ loadingLabel, comment, handleVote}) =>
-    <div>
-        <h4>Author: {comment.author}</h4>
-        <h4>Rating: {comment.voteScore}</h4>
-        <Button raised color="primary" onClick={handleVote('upVote')}>Upvote</Button>
-        <Button raised color="primary" onClick={handleVote('downVote')}>Downvote</Button>
-        <h4>Time created: {(new Date(comment.timestamp)).toDateString()}</h4>
-        <h3>{comment.body}</h3>
-    </div>
+import * as types from '../utils/PropTypes'
+
+const Comment = ({ loadingLabel, comment, handleVote }) => (
+    <Card>
+        <CardHeader avatar={<Avatar>{comment.voteScore}</Avatar>}
+            title={
+                <div>
+                    <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>
+                    <Button dense color="accent" onClick={handleVote('downVote')}><KeyboardArrowDown /></Button>
+                    <Button component={Link} to={`/comments/${comment.id}/edit`}><ModeEdit /></Button>
+                    <Button color="accent" component={Link} to={`/comments/${comment.id}/delete`}><Delete /></Button>
+                </div>
+                } subheader={`@${comment.author} | ${(new Date(comment.timestamp)).toDateString()}`}>
+        </CardHeader>
+        <CardContent>
+            <Typography type="body1">{comment.body}</Typography>
+        </CardContent>
+    </Card>
+)
+
 
 Comment.protoTypes = {
     loadingLabel: PropTypes.string.isRequired,
-    comment: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        timestamp: PropTypes.number.isRequired,
-        body: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired
-    }).isRequired,
+    comment: types.comment.isRequired,
 }
 
 export default Comment

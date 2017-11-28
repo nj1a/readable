@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui-next/Button'
+import Button from 'material-ui/Button'
+
+import * as types from '../utils/PropTypes'
 
 const CommentEditor = ({ handleSubmit, comment, parentId }) =>
     <div>
@@ -19,14 +21,7 @@ const CommentEditor = ({ handleSubmit, comment, parentId }) =>
 
 CommentEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    comment: PropTypes.PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        parentId: PropTypes.string.isRequired,
-        timestamp: PropTypes.number.isRequired,
-        body: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired
-    }),
+    comment: types.comment,
     parentId: PropTypes.string.isRequired
 }
 

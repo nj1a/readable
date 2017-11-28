@@ -1,35 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import Button from 'material-ui/Button'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
+import withStyles from 'material-ui/styles/withStyles'
 
-const Category = ({ title, loadingLabel, posts, category }) => 
+import * as types from '../utils/PropTypes'
+
+const styles = theme => ({
+    listItem: {
+        background: theme.palette.background.paper,
+        margin: 10,
+    }
+})
+
+const Category = ({ title, loadingLabel, posts, category, classes }) => 
     <div>
         <h1>{title} Posts</h1>
-        <div>
-            <ul>
-                {posts.map(post =>
-                    <Button component={Link} key={post.id} to={`/posts/${post.id}`}>{post.title}</Button>)}
-            </ul>
-        </div>
+        <List>
+            {posts.map(post =>
+                <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >    
+                    <Avatar>{post.voteScore}</Avatar>    
+                    <ListItemText primary={post.title} secondary={Date(post.timestamp)} />
+                </ListItem>)}
+        </List>
     </div>
 
 Category.protoTypes = {
     title: PropTypes.string.isRequired,
     loadingLabel: PropTypes.string.isRequired,
-    posts: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            timestamp: PropTypes.number.isRequired,
-            title: PropTypes.string.isRequired,
-            body: PropTypes.string.isRequired,
-            author: PropTypes.string.isRequired,
-            category: PropTypes.string.isRequired,
-            voteScore: PropTypes.number.isRequired,
-            commentCount: PropTypes.number.isRequired
-        })
-    ).isRequired,
+    posts: types.posts.isRequired,
     category: PropTypes.string
 }
 
-export default Category
+export default withStyles(styles)(Category)

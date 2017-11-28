@@ -4,19 +4,13 @@ import { connect } from 'react-redux'
 
 import { editComment } from '../actions'
 import CommentEditor from '../components/CommentEditor'
+import * as types from '../utils/PropTypes'
 
 class EditCommentPage extends Component {
     static propTypes = {
         editComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        comment: PropTypes.PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            parentId: PropTypes.string.isRequired,
-            timestamp: PropTypes.number.isRequired,
-            body: PropTypes.string.isRequired,
-            author: PropTypes.string.isRequired,
-            voteScore: PropTypes.number.isRequired
-        }).isRequired
+        comment: types.comment.isRequired
     }
 
     handleSubmit = event => {

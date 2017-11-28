@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui-next/Button'
+import Button from 'material-ui/Button'
+
+import * as types from '../utils/PropTypes'
 
 const PostEditor = ({ handleSubmit, post }) =>
     <div>
@@ -21,16 +23,7 @@ const PostEditor = ({ handleSubmit, post }) =>
 
 PostEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    post: PropTypes.PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        timestamp: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
-        category: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired,
-        commentCount: PropTypes.number.isRequired
-    })
+    post: types.post,
 }
 
 export default PostEditor

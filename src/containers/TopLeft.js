@@ -10,6 +10,7 @@ import Button from 'material-ui/Button'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
+import NoteAdd from 'material-ui-icons/NoteAdd'
 
 import { loadCategories, loadPosts } from '../actions/index'
 
@@ -27,6 +28,9 @@ const styles = theme => ({
         height: '100%',
         width: drawerWidth,
     },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+    }
 })
 
 class TopLeft extends Component {
@@ -41,7 +45,9 @@ class TopLeft extends Component {
                 <AppBar className={classes.appBar}>
                     <Toolbar>
                         <Typography type="button" color="inherit" className={classes.flex}>Title</Typography>
-                        <Button component={Link} to='/posts/add' color="contrast">Add Post</Button>
+                        <Button component={Link} to='/posts/add' color="contrast">
+                            Add Post<NoteAdd className={classes.rightIcon}/>
+                        </Button>
                     </Toolbar>
                 </AppBar>
                 <Drawer type="permanent" classes={{ paper: classes.drawerPaper, }} anchor="left">

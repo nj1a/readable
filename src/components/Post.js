@@ -1,32 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui-next/Button'
+import { Link } from 'react-router-dom'
+import Button from 'material-ui/Button'
+import Card, { CardActions, CardContent, CardHeader } from 'material-ui/Card'
+import Typography from 'material-ui/Typography'
+import Avatar from 'material-ui/Avatar'
+import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
+import ModeEdit from 'material-ui-icons/ModeEdit'
+import Delete from 'material-ui-icons/Delete'
+import Comment from 'material-ui-icons/Comment'
+import Badge from 'material-ui/Badge'
+
+import * as types from '../utils/PropTypes'
 
 const Post = ({ loadingLabel, post, handleVote }) =>
-    <div>
-        <h3>{post.title}</h3>
-        <h4>Rating: {post.voteScore}</h4>
-        <Button raised color="primary" onClick={handleVote('upVote')}>Upvote</Button>
-        <Button raised color="primary" onClick={handleVote('downVote')}>Downvote</Button>
-        <h4>Author: {post.author}</h4>
-        <h4>Category: {post.category}</h4>
-        <h4># of Comments: {post.commentCount}</h4>
-        <h4>Time created: {(new Date(post.timestamp)).toDateString()}</h4>
-        <h3>{post.body}</h3>
-    </div>
+    <Card>
+        <CardHeader avatar={<Badge badgeContent={post.commentCount} color="accent"><Avatar>{post.voteScore}</Avatar></Badge>}
+            title={`${post.category}::${post.title}`} subheader={`@${post.author} | ${(new Date(post.timestamp)).toDateString()}`}>
+        </CardHeader>
+        <CardContent>
+            <Typography type="body1">{post.body}</Typography>
+        </CardContent>
+        <CardActions>
+            <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>
+            <Button dense color="accent" onClick={handleVote('downVote')}><KeyboardArrowDown /></Button>
+            <Button component={Link} to={`/posts/${post.id}/edit`}><ModeEdit /></Button>
+            <Button color="accent" component={Link} to={`/posts/${post.id}/delete`}><Delete /></Button>
+            <Button color="primary" component={Link} to={`/posts/${post.id}/comments/add`}><Comment /></Button>
+        </CardActions>
+    </Card>
 
 Post.protoTypes = {
     loadingLabel: PropTypes.string.isRequired,
-    post: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        timestamp: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string.isRequired,
-        author: PropTypes.string.isRequired,
-        category: PropTypes.string.isRequired,
-        voteScore: PropTypes.number.isRequired,
-        commentCount: PropTypes.number.isRequired
-    }).isRequired,
+    post: types.post.isRequired,
 }
 
 export default Post
