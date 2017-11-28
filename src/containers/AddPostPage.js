@@ -5,10 +5,12 @@ import uuidv4 from 'uuid/v4'
 
 import { addPost } from '../actions'
 import PostEditor from '../components/PostEditor'
+import * as types from '../utils/PropTypes'
 
 class AddPostPage extends Component {
     static propTypes = {
-        addPost: PropTypes.func.isRequired
+        addPost: PropTypes.func.isRequired,
+        categories: types.categories.isRequired,
     }
 
     handleSubmit = (event) => {
@@ -26,9 +28,13 @@ class AddPostPage extends Component {
 
     render() {
         return (
-            <PostEditor handleSubmit={this.handleSubmit} />
+            <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories}/>
         )
     }
 }
 
-export default connect(null, { addPost })(AddPostPage)
+const mapStateToProps = state => ({
+    categories: Object.values(state.entities.categories),
+})
+
+export default connect(mapStateToProps, { addPost })(AddPostPage)

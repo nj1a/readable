@@ -23,3 +23,10 @@ export const post = PropTypes.PropTypes.shape({
 })
 
 export const posts = PropTypes.arrayOf(post)
+
+export const category = PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+})
+
+export const categories = PropTypes.arrayOf(category)

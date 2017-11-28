@@ -8,7 +8,8 @@ import CommentEditor from '../components/CommentEditor'
 
 class AddCommentPage extends Component {
     static propTypes = {
-        addComment: PropTypes.func.isRequired
+        addComment: PropTypes.func.isRequired,
+        postTitle: PropTypes.string.isRequired,
     }
 
     handleSubmit = event => {
@@ -26,9 +27,15 @@ class AddCommentPage extends Component {
 
     render() {
         return (
-            <CommentEditor handleSubmit={this.handleSubmit} parentId={this.props.match.params.parentId} />
+            <CommentEditor handleSubmit={this.handleSubmit} postTitle={this.props.postTitle} />
         )
     }
 }
 
-export default connect(null, { addComment })(AddCommentPage)
+const mapStateToProps = (state, ownProps) => ({
+    id: ownProps.match.params.id,
+    comment: state.entities.comments[ownProps.match.params.id],
+    postTitle: state.entities.posts[ownProps.match.params.parentId].title,
+})
+
+export default connect(mapStateToProps, { addComment })(AddCommentPage)

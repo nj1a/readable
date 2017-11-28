@@ -10,7 +10,8 @@ class EditCommentPage extends Component {
     static propTypes = {
         editComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        comment: types.comment.isRequired
+        comment: types.comment.isRequired,
+        postTitle: PropTypes.string.isRequired,
     }
 
     handleSubmit = event => {
@@ -26,7 +27,7 @@ class EditCommentPage extends Component {
     render() {
         return (
             <CommentEditor handleSubmit={this.handleSubmit} comment={this.props.comment}
-                parentId={this.props.comment.parentId} />
+                postTitle={this.props.postTitle} />
         )
     }
 }
@@ -34,6 +35,7 @@ class EditCommentPage extends Component {
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
     comment: state.entities.comments[ownProps.match.params.id],
+    postTitle: state.entities.posts[state.entities.comments[ownProps.match.params.id].parentId].title,
 })
 
 export default connect(mapStateToProps, { editComment })(EditCommentPage)

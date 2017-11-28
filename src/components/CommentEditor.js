@@ -1,20 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
+import TextField from 'material-ui/TextField'
 
 import * as types from '../utils/PropTypes'
 
-const CommentEditor = ({ handleSubmit, comment, parentId }) =>
+const CommentEditor = ({ handleSubmit, comment, postTitle }) =>
     <div>
         <p>{comment ? 'Edit' : 'Add'} a Comment:</p>
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="parent">Parent ID: </label>
-            <input id="parent" name="parent" disabled defaultValue={parentId} /><br />
-            <label htmlFor="author">Author: </label>
-            <input id="author" name="author" disabled={comment} value={comment && comment.author} /><br />
-            <label htmlFor="body">Body: </label>
-            <input id="body" name="body" defaultValue={comment && comment.body} /><br />
-            <Button raised color="primary">{comment ? 'Edit' : 'Add'}</Button>
+        <form onSubmit={handleSubmit} autoComplete="off">
+            <TextField id="postTitle" name="postTitle" label="Post Title" margin="normal"
+                defaultValue={postTitle} fullWidth disabled />
+            <TextField id="author" name="author" label="Author" margin="normal"
+                defaultValue={comment && comment.author} required={!comment} fullWidth disabled={!!comment} />
+            <TextField id="body" name="body" label="Body" margin="normal"
+                defaultValue={comment && comment.body} required fullWidth multiline />
+            <Button raised color="primary" type="submit">{comment ? 'Edit' : 'Add'}</Button>
         </form>
     </div>
 
@@ -22,7 +23,7 @@ const CommentEditor = ({ handleSubmit, comment, parentId }) =>
 CommentEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     comment: types.comment,
-    parentId: PropTypes.string.isRequired
+    postTitle: PropTypes.string.isRequired,
 }
 
 export default CommentEditor

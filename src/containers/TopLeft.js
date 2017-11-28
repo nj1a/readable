@@ -13,6 +13,7 @@ import Divider from 'material-ui/Divider'
 import NoteAdd from 'material-ui-icons/NoteAdd'
 
 import { loadCategories, loadPosts } from '../actions/index'
+import * as types from '../utils/PropTypes'
 
 const drawerWidth = 240
 const styles = theme => ({
@@ -73,12 +74,7 @@ TopLeft.propTypes = {
         flex: PropTypes.string.isRequired,
         drawerPaper: PropTypes.string.isRequired,
     }).isRequired,
-    categories: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            path: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    categories: types.categories.isRequired,
 }
 
 const mapStateToProps = state => ({

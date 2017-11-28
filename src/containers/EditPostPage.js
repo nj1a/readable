@@ -10,7 +10,8 @@ class EditPostPage extends Component {
     static propTypes = {
         editPost: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
-        post: types.post.isRequired
+        categories: types.categories.isRequired,
+        post: types.post.isRequired,
     }
 
     handleSubmit = event => {
@@ -26,13 +27,14 @@ class EditPostPage extends Component {
 
     render() {
         return (
-            <PostEditor handleSubmit={this.handleSubmit} post={this.props.post} />
+            <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories} post={this.props.post} />
         )
     }
 }
 
 const mapStateToProps = (state, ownProps) => ({
     id: ownProps.match.params.id,
+    categories: Object.values(state.entities.categories),
     post: state.entities.posts[ownProps.match.params.id],
 })
 

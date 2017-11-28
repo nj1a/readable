@@ -21,7 +21,7 @@ const Category = ({ title, loadingLabel, posts, category, classes }) =>
             {posts.map(post =>
                 <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >    
                     <Avatar>{post.voteScore}</Avatar>    
-                    <ListItemText primary={post.title} secondary={Date(post.timestamp)} />
+                    <ListItemText primary={post.title} secondary={(new Date(post.timestamp)).toDateString()} />
                 </ListItem>)}
         </List>
     </div>
