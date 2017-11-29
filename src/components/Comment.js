@@ -15,7 +15,7 @@ import * as types from '../utils/PropTypes'
 
 const Comment = ({ loadingLabel, comment, handleVote }) => (
     <Card>
-        <CardHeader avatar={<Avatar>{comment.voteScore}</Avatar>}
+        <CardHeader avatar={<Tooltip title="Score"><Avatar>{comment.voteScore}</Avatar></Tooltip>}
             title={
                 <div>
                     <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>

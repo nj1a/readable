@@ -14,9 +14,9 @@ const styles = theme => ({
     }
 })
 
-const Category = ({ title, loadingLabel, posts, category, classes }) => 
+const Category = ({ posts, category, classes }) => 
     <div>
-        <h1>{title} Posts</h1>
+        <h1>{category} Posts</h1>
         <List>
             {posts.map(post =>
                 <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >    
@@ -27,10 +27,9 @@ const Category = ({ title, loadingLabel, posts, category, classes }) =>
     </div>
 
 Category.protoTypes = {
-    title: PropTypes.string.isRequired,
-    loadingLabel: PropTypes.string.isRequired,
     posts: types.posts.isRequired,
-    category: PropTypes.string
+    category: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Category)

@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles'
 
 import AppFrame from './AppFrame'
 import App from './App'
-import CategoryPage from './CategoryPage'
 import PostPage from './PostPage'
 import EditPostPage from './EditPostPage'
 import DeletePostPage from './DeletePostPage'
@@ -41,7 +40,7 @@ const Root = ({ classes }) => (
         <main className={classes.content}>
             <Switch>
                 <Route exact path='/' component={App} />
-                <Route exact path='/categories/:category/posts' component={CategoryPage} />
+                <Route exact path='/categories/:category/posts' component={App} />
                 <Route exact path='/posts/add' component={AddPostPage} />
                 <Route exact path='/posts/:id' component={PostPage} />
                 <Route exact path='/posts/:id/edit' component={EditPostPage} />

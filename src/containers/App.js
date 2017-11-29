@@ -1,30 +1,40 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { loadPostsOfCategory } from '../actions/index'
 import Category from '../components/Category'
 import * as types from '../utils/PropTypes'
 
 class App extends Component {
     static propTypes = {
+        loadPostsOfCategory: PropTypes.func.isRequired,
         posts: types.posts.isRequired
     }
 
+    componentDidMount() {
+        this.props.loadPostsOfCategory(this.props.category)
+    }
+
     render() {
-        const props = {
-            title: "All",
-            posts: this.props.posts,
-            category: this.props.category,
-            loadiingLabel: "Loading..."
-        }
         return (
-            <Category {...props} />
+            <Category posts={this.props.posts} category={this.props.category} />
         )
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    posts: Object.values(state.entities.posts)
-})
+const mapStateToProps = (state, ownProps) => {
+    const isHome = ownProps.match.path === '/'
+    const category = isHome ? "All" : ownProps.match.params.category
+    const posts = isHome
+        ? Object.values(state.entities.posts)
+        : Object.values(state.entities.posts).filter(post => post.category === category)
+    return {
+        category,
+        posts: posts.sort((a, b) => b.voteScore - a.voteScore)
+    }
+}
 
-export default connect(mapStateToProps)(App)
-
+export default connect(mapStateToProps, {
+    loadPostsOfCategory
+})(App)

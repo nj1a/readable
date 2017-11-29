@@ -17,7 +17,7 @@ import * as types from '../utils/PropTypes'
 
 const Post = ({ loadingLabel, post, handleVote }) =>
     <Card>
-        <CardHeader avatar={<Badge badgeContent={post.commentCount} color="accent"><Avatar>{post.voteScore}</Avatar></Badge>}
+        <CardHeader avatar={<Badge badgeContent={post.commentCount} color="accent"><Tooltip title="Score"><Avatar>{post.voteScore}</Avatar></Tooltip></Badge>}
             title={`${post.category}::${post.title}`} subheader={`@${post.author} | ${(new Date(post.timestamp)).toDateString()}`}>
         </CardHeader>
         <CardContent>
