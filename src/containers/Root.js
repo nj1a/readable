@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 
-import TopLeft from './TopLeft'
+import AppFrame from './AppFrame'
 import App from './App'
 import CategoryPage from './CategoryPage'
 import PostPage from './PostPage'
@@ -13,6 +13,7 @@ import AddPostPage from './AddPostPage'
 import AddCommentPage from './AddCommentPage'
 import EditCommentPage from './EditCommentPage'
 import DeleteCommentPage from './DeleteCommentPage'
+import NoMatch from '../components/NoMatch'
 
 const styles = theme => ({
     root: {
@@ -36,7 +37,7 @@ const styles = theme => ({
 
 const Root = ({ classes }) => (
     <div className={classes.root}>
-        <TopLeft />
+        <AppFrame />
         <main className={classes.content}>
             <Switch>
                 <Route exact path='/' component={App} />
@@ -48,6 +49,7 @@ const Root = ({ classes }) => (
                 <Route exact path='/posts/:parentId/comments/add' component={AddCommentPage} />
                 <Route exact path='/comments/:id/edit' component={EditCommentPage} />
                 <Route exact path='/comments/:id/delete' component={DeleteCommentPage} />
+                <Route component={NoMatch} />
             </Switch>    
         </main>
     </div>

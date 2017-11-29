@@ -9,6 +9,7 @@ import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
 import ModeEdit from 'material-ui-icons/ModeEdit'
 import Delete from 'material-ui-icons/Delete'
+import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
@@ -19,8 +20,12 @@ const Comment = ({ loadingLabel, comment, handleVote }) => (
                 <div>
                     <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>
                     <Button dense color="accent" onClick={handleVote('downVote')}><KeyboardArrowDown /></Button>
-                    <Button component={Link} to={`/comments/${comment.id}/edit`}><ModeEdit /></Button>
-                    <Button color="accent" component={Link} to={`/comments/${comment.id}/delete`}><Delete /></Button>
+                    <Tooltip title="Edit comment">
+                        <Button component={Link} to={`/comments/${comment.id}/edit`}><ModeEdit /></Button>
+                    </Tooltip>
+                    <Tooltip title="Delete comment">
+                        <Button color="accent" component={Link} to={`/comments/${comment.id}/delete`}><Delete /></Button>
+                    </Tooltip>    
                 </div>
                 } subheader={`@${comment.author} | ${(new Date(comment.timestamp)).toDateString()}`}>
         </CardHeader>

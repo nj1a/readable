@@ -11,6 +11,7 @@ import ModeEdit from 'material-ui-icons/ModeEdit'
 import Delete from 'material-ui-icons/Delete'
 import Comment from 'material-ui-icons/Comment'
 import Badge from 'material-ui/Badge'
+import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
@@ -25,9 +26,15 @@ const Post = ({ loadingLabel, post, handleVote }) =>
         <CardActions>
             <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>
             <Button dense color="accent" onClick={handleVote('downVote')}><KeyboardArrowDown /></Button>
-            <Button component={Link} to={`/posts/${post.id}/edit`}><ModeEdit /></Button>
-            <Button color="accent" component={Link} to={`/posts/${post.id}/delete`}><Delete /></Button>
-            <Button color="primary" component={Link} to={`/posts/${post.id}/comments/add`}><Comment /></Button>
+            <Tooltip title="Edit post">
+                <Button component={Link} to={`/posts/${post.id}/edit`}><ModeEdit /></Button>
+            </Tooltip>
+            <Tooltip title="Delete post">
+                <Button color="accent" component={Link} to={`/posts/${post.id}/delete`}><Delete /></Button>
+            </Tooltip>
+            <Tooltip title="Add a comment">
+                <Button color="primary" component={Link} to={`/posts/${post.id}/comments/add`}><Comment /></Button>
+            </Tooltip>    
         </CardActions>
     </Card>
 

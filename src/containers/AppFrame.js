@@ -10,7 +10,9 @@ import Button from 'material-ui/Button'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
-import NoteAdd from 'material-ui-icons/NoteAdd'
+import Tooltip from 'material-ui/Tooltip'
+// import { LinearProgress } from 'material-ui/Progress'
+import AddIcon from 'material-ui-icons/Add'
 
 import { loadCategories, loadPosts } from '../actions/index'
 import * as types from '../utils/PropTypes'
@@ -31,10 +33,14 @@ const styles = theme => ({
     },
     rightIcon: {
         marginLeft: theme.spacing.unit,
-    }
+    },
+    // progressBar: {
+    //     width: '100%',
+    //     position: 'fixed',
+    // },
 })
 
-class TopLeft extends Component {
+class AppFrame extends Component {
     componentDidMount() {
         this.props.loadCategories()
         this.props.loadPosts()
@@ -43,22 +49,30 @@ class TopLeft extends Component {
         const { classes, categories } = this.props
         return (
             <div>
+                {/* <div className={classes.progressBar} >
+                    <LinearProgress color="accent" />
+                </div> */}
                 <AppBar className={classes.appBar}>
                     <Toolbar>
                         <Typography type="button" color="inherit" className={classes.flex}>Title</Typography>
-                        <Button component={Link} to='/posts/add' color="contrast">
-                            Add Post<NoteAdd className={classes.rightIcon}/>
-                        </Button>
+                        <Tooltip title="Add a post">
+                            <Button component={Link} to='/posts/add' color="contrast">
+                                <AddIcon className={classes.rightIcon}/>
+                            </Button>
+                        </Tooltip>
                     </Toolbar>
                 </AppBar>
                 <Drawer type="permanent" classes={{ paper: classes.drawerPaper, }} anchor="left">
                     <Toolbar>
-                        <Button component={Link} to='/' color="primary">Readable</Button>
+                        <Tooltip title="Back to Index Page">
+                            <Button component={Link} to='/' color="primary">Readable</Button>
+                        </Tooltip>    
                     </Toolbar>
                     <Divider />
                     <List>
+                        <ListItem divider>Categories</ListItem>
                         {categories.map(category =>
-                            < ListItem button component={Link} key={category.name} to={`/categories/${category.path}/posts`}>
+                            <ListItem button component={Link} key={category.name} to={`/categories/${category.path}/posts`}>
                                 <ListItemText primary={category.name} />
                             </ListItem>)}
                     </List>
@@ -68,7 +82,7 @@ class TopLeft extends Component {
     }
 }
 
-TopLeft.propTypes = {
+AppFrame.propTypes = {
     classes: PropTypes.shape({
         appBar: PropTypes.string.isRequired,
         flex: PropTypes.string.isRequired,
@@ -84,4 +98,4 @@ const mapStateToProps = state => ({
 export default withStyles(styles)(connect(mapStateToProps, {
     loadPosts,
     loadCategories
-})(TopLeft))
+})(AppFrame))
