@@ -65,7 +65,7 @@ const AppDrawer = ({ categories, classes, handleDrawerToggle, handleNestedCatego
                     <List disablePadding>
                         {categories.map(category =>
                             <ListItem button component={Link} key={category.name} onClick={handleDrawerToggle}
-                                to={`/categories/${category.path}/posts`} className={classes.categoryList}>
+                                to={`/${category.path}`} className={classes.categoryList}>
                                 <ListItemText primary={upperFirst(category.name)} classes={{ text: classes.text }}/>
                             </ListItem>)}
                     </List>

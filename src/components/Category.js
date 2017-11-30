@@ -43,7 +43,7 @@ const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick,
         <List>
             {posts.length
                 ? (posts.map(post =>
-                    <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >
+                    <ListItem button component={Link} key={post.id} to={`/${post.category}/${post.id}`} className={classes.listItem} >
                         <Tooltip title={`Score ${post.voteScore}`}>
                             <Avatar>{post.voteScore}</Avatar>
                         </Tooltip>

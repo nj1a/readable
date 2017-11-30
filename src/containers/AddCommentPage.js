@@ -6,11 +6,12 @@ import { Redirect } from 'react-router'
 
 import { addComment } from '../actions'
 import CommentEditor from '../components/CommentEditor'
+import * as types from '../utils/PropTypes'
 
 class AddCommentPage extends Component {
     static propTypes = {
         addComment: PropTypes.func.isRequired,
-        postTitle: PropTypes.string.isRequired,
+        post: types.post.isRequired,
     }
 
     state = {

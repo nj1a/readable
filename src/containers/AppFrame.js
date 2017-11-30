@@ -52,6 +52,7 @@ class AppFrame extends Component {
     state = {
         DrawerOpened: false,
         categoryOpened: true,
+        isLoading: false,
     }
 
     handleDrawerToggle = () => {
@@ -60,6 +61,14 @@ class AppFrame extends Component {
 
     handleNestedCategoryToggle = () => {
         this.setState({ categoryOpened: !this.state.categoryOpened });
+    }
+
+    setIsLoading = () => {
+        this.setState({ isLoading: true })
+    }
+
+    setIsNotLoading = () => {
+        this.setState({ isLoading: false })
     }
 
     componentDidMount() {
@@ -78,7 +87,8 @@ class AppFrame extends Component {
                     </div>
                     <AppTopBar handleDrawerToggle={this.handleDrawerToggle} />
                     <AppDrawer DrawerOpened={DrawerOpened} categoryOpened={categoryOpened}
-                        handleDrawerToggle={this.handleDrawerToggle} handleNestedCategoryToggle={this.handleNestedCategoryToggle} />
+                        handleDrawerToggle={this.handleDrawerToggle}
+                        handleNestedCategoryToggle={this.handleNestedCategoryToggle} />
                     <main className={classes.content}>
                         {children}
                     </main>    
