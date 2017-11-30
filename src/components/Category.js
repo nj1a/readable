@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import withStyles from 'material-ui/styles/withStyles'
+import upperFirst from 'lodash/upperFirst'
 
 import * as types from '../utils/PropTypes'
 
@@ -16,7 +17,7 @@ const styles = theme => ({
 
 const Category = ({ posts, category, classes }) => 
     <div>
-        <h1>{category} Posts</h1>
+        <h1>{upperFirst(category)} Posts</h1>
         <List>
             {posts.map(post =>
                 <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >    

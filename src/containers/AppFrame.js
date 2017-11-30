@@ -1,101 +1,95 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Drawer from 'material-ui/Drawer'
-import List, { ListItem, ListItemText } from 'material-ui/List'
-import Divider from 'material-ui/Divider'
-import Tooltip from 'material-ui/Tooltip'
-// import { LinearProgress } from 'material-ui/Progress'
-import AddIcon from 'material-ui-icons/Add'
+import { LinearProgress } from 'material-ui/Progress'
 
+import AppTopBar from '../components/AppTopBar'
+import AppDrawer from '../components/AppDrawer'
 import { loadCategories, loadPosts } from '../actions/index'
-import * as types from '../utils/PropTypes'
 
-const drawerWidth = 240
 const styles = theme => ({
-    appBar: {
-        position: 'absolute',
-        width: `calc(100% - ${drawerWidth}px)`,
+    root: {
+        width: '100%',
+        zIndex: 1,
+        overflow: 'hidden',
     },
-    flex: {
-        flex: 1
-    },
-    drawerPaper: {
+    appFrame: {
         position: 'relative',
+        display: 'flex',
+        width: '100%',
         height: '100%',
-        width: drawerWidth,
     },
-    rightIcon: {
-        marginLeft: theme.spacing.unit,
+    progressBar: {
+        position: 'fixed',
+        width: '100%',
+        // z-index of 1400 is required to show the progress bar over the Drawer and the AppBar
+        zIndex: 1400,
     },
-    // progressBar: {
-    //     width: '100%',
-    //     position: 'fixed',
-    // },
+    content: {
+        backgroundColor: theme.palette.background.default,
+        width: '100%',
+        padding: theme.spacing.unit * 3,
+        height: 'calc(100% - 56px)',
+        marginTop: 56,
+        [theme.breakpoints.up('sm')]: {
+            height: 'calc(100% - 64px)',
+            marginTop: 64,
+        },
+    },
 })
 
 class AppFrame extends Component {
+    state = {
+        DrawerOpened: false,
+        categoryOpened: true,
+    }
+
+    handleDrawerToggle = () => {
+        this.setState({ DrawerOpened: !this.state.DrawerOpened });
+    }
+
+    handleNestedCategoryToggle = () => {
+        this.setState({ categoryOpened: !this.state.categoryOpened });
+    }
+
     componentDidMount() {
         this.props.loadCategories()
         this.props.loadPosts()
     }
+
     render() {
-        const { classes, categories } = this.props
+        const { classes, children } = this.props
         return (
-            <div>
-                {/* <div className={classes.progressBar} >
-                    <LinearProgress color="accent" />
-                </div> */}
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <Typography type="button" color="inherit" className={classes.flex}>Title</Typography>
-                        <Tooltip title="Add a post">
-                            <Button component={Link} to='/posts/add' color="contrast">
-                                <AddIcon className={classes.rightIcon}/>
-                            </Button>
-                        </Tooltip>
-                    </Toolbar>
-                </AppBar>
-                <Drawer type="permanent" classes={{ paper: classes.drawerPaper, }} anchor="left">
-                    <Toolbar>
-                        <Tooltip title="Back to Index Page">
-                            <Button component={Link} to='/' color="primary">Readable</Button>
-                        </Tooltip>    
-                    </Toolbar>
-                    <Divider />
-                    <List>
-                        <ListItem divider>Categories</ListItem>
-                        {categories.map(category =>
-                            <ListItem button component={Link} key={category.name} to={`/categories/${category.path}/posts`}>
-                                <ListItemText primary={category.name} />
-                            </ListItem>)}
-                    </List>
-                </Drawer>
-            </div>
+            <div className={classes.root}>
+                <div className={classes.appFrame}>
+                    <div className={classes.progressBar} >
+                        <LinearProgress color="accent" />
+                    </div>
+                    <AppTopBar handleDrawerToggle={this.handleDrawerToggle} />
+                    <AppDrawer DrawerOpened={this.state.DrawerOpened} categoryOpened={this.state.categoryOpened}
+                        handleDrawerToggle={this.handleDrawerToggle} handleNestedCategoryToggle={this.handleNestedCategoryToggle} />
+                    <main className={classes.content}>
+                        {children}
+                    </main>    
+                </div>
+            </div>    
         )
     }
 }
 
 AppFrame.propTypes = {
     classes: PropTypes.shape({
-        appBar: PropTypes.string.isRequired,
-        flex: PropTypes.string.isRequired,
-        drawerPaper: PropTypes.string.isRequired,
+        root: PropTypes.string.isRequired,
+        appFrame: PropTypes.string.isRequired,
+        progressBar: PropTypes.string.isRequired,
+        content: PropTypes.string.isRequired,
     }).isRequired,
-    categories: types.categories.isRequired,
+    loadPosts: PropTypes.func.isRequired,
+    loadCategories: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
-    categories: Object.values(state.entities.categories),
-})
-
-export default withStyles(styles)(connect(mapStateToProps, {
+export default withStyles(styles)(connect(null, {
     loadPosts,
     loadCategories
 })(AppFrame))

@@ -25,7 +25,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const isHome = ownProps.match.path === '/'
-    const category = isHome ? "All" : ownProps.match.params.category
+    const category = isHome ? "all" : ownProps.match.params.category
     const posts = isHome
         ? Object.values(state.entities.posts)
         : Object.values(state.entities.posts).filter(post => post.category === category)
