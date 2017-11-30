@@ -16,7 +16,6 @@ import ExpandLess from 'material-ui-icons/ExpandLess'
 import ExpandMore from 'material-ui-icons/ExpandMore'
 import StarBorder from 'material-ui-icons/StarBorder'
 
-
 import * as types from '../utils/PropTypes'
 
 // this width should be the same as the one in AppTopBar
@@ -32,7 +31,14 @@ const styles = theme => ({
     },
     categoryList: {
         paddingLeft: theme.spacing.unit * 5,
+        '&:focus': {
+            background: theme.palette.primary[500],
+            '& $text': {
+                color: theme.palette.common.white,
+            },
+        },
     },
+    text: {},
 })
 
 const AppDrawer = ({ categories, classes, handleDrawerToggle, handleNestedCategoryToggle, DrawerOpened, categoryOpened }) => {
@@ -57,7 +63,7 @@ const AppDrawer = ({ categories, classes, handleDrawerToggle, handleNestedCatego
                         {categories.map(category =>
                             <ListItem button component={Link} key={category.name} onClick={handleDrawerToggle}
                                 to={`/categories/${category.path}/posts`} className={classes.categoryList}>
-                                <ListItemText primary={upperFirst(category.name)} />
+                                <ListItemText primary={upperFirst(category.name)} classes={{ text: classes.text }}/>
                             </ListItem>)}
                     </List>
                 </Collapse>

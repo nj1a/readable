@@ -12,13 +12,33 @@ class App extends Component {
         posts: types.posts.isRequired
     }
 
+    state = {
+        anchorEl: null,
+        sortOpened: false,
+        sortBy: 'voteScore',
+    };
+
+    handleClick = (event) => {
+        this.setState({ sortOpened: true, anchorEl: event.currentTarget });
+    };
+
+    handleRequestClose = sortBy => () => {
+        this.setState({ sortOpened: false });
+        if (sortBy) {
+            this.setState({ sortBy })
+        }
+    };
+
     componentDidMount() {
         this.props.loadPostsOfCategory(this.props.category)
     }
 
     render() {
+        const {sortOpened, anchorEl, sortBy } = this.state
         return (
-            <Category posts={this.props.posts} category={this.props.category} />
+            <Category posts={this.props.posts.sort((a, b) => b[sortBy] - a[sortBy])}
+                category={this.props.category} sortOpened={sortOpened} anchorEl={anchorEl}
+                handleClick={this.handleClick} handleRequestClose={this.handleRequestClose} />
         )
     }
 }
@@ -26,12 +46,11 @@ class App extends Component {
 const mapStateToProps = (state, ownProps) => {
     const isHome = ownProps.match.path === '/'
     const category = isHome ? "all" : ownProps.match.params.category
-    const posts = isHome
-        ? Object.values(state.entities.posts)
-        : Object.values(state.entities.posts).filter(post => post.category === category)
     return {
         category,
-        posts: posts.sort((a, b) => b.voteScore - a.voteScore)
+        posts: isHome
+            ? Object.values(state.entities.posts)
+            : Object.values(state.entities.posts).filter(post => post.category === category)
     }
 }
 

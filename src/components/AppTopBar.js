@@ -26,7 +26,7 @@ const styles = theme => ({
             display: 'none',
         },
     },
-    appBarBuffer: {
+    middleBuffer: {
         flex: '1 1 auto',
     },
 })
@@ -38,7 +38,7 @@ const AppTopBar = ({ classes, handleDrawerToggle }) => (
                 <MenuIcon />
             </IconButton>
             <Typography type="button" color="inherit">Title</Typography>
-            <div className={classes.appBarBuffer} />
+            <div className={classes.middleBuffer} />
             <Tooltip title="Add a post">
                 <Button component={Link} to='/posts/add' color="contrast">
                     <AddIcon />
@@ -52,7 +52,7 @@ AppTopBar.propTypes = {
     classes: PropTypes.shape({
         appBar: PropTypes.string.isRequired,
         drawerMobileIcon: PropTypes.string.isRequired,
-        appBarBuffer: PropTypes.string.isRequired,
+        middleBuffer: PropTypes.string.isRequired,
     }).isRequired,
 }
 

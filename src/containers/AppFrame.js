@@ -60,6 +60,7 @@ class AppFrame extends Component {
 
     render() {
         const { classes, children } = this.props
+        const { DrawerOpened, categoryOpened } = this.state
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
@@ -67,7 +68,7 @@ class AppFrame extends Component {
                         <LinearProgress color="accent" />
                     </div>
                     <AppTopBar handleDrawerToggle={this.handleDrawerToggle} />
-                    <AppDrawer DrawerOpened={this.state.DrawerOpened} categoryOpened={this.state.categoryOpened}
+                    <AppDrawer DrawerOpened={DrawerOpened} categoryOpened={categoryOpened}
                         handleDrawerToggle={this.handleDrawerToggle} handleNestedCategoryToggle={this.handleNestedCategoryToggle} />
                     <main className={classes.content}>
                         {children}
