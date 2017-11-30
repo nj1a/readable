@@ -2,11 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
+import withStyles from 'material-ui/styles/withStyles'
 
 import * as types from '../utils/PropTypes'
 
-const CommentEditor = ({ handleSubmit, comment, postTitle }) =>
-    <div>
+const styles = theme => ({
+    div: {
+        margin: 10,
+        [theme.breakpoints.up('md')]: {
+            maxWidth: 600,
+            margin: '0 auto',
+        },
+    },
+})
+
+const CommentEditor = ({ handleSubmit, comment, postTitle, classes }) =>
+    <div className={classes.div}>
         <p>{comment ? 'Edit' : 'Add'} a Comment:</p>
         <form onSubmit={handleSubmit} autoComplete="off">
             <TextField id="postTitle" name="postTitle" label="Post Title" margin="normal"
@@ -26,4 +37,4 @@ CommentEditor.propTypes = {
     postTitle: PropTypes.string.isRequired,
 }
 
-export default CommentEditor
+export default withStyles(styles)(CommentEditor)

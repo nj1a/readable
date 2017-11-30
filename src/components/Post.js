@@ -23,7 +23,7 @@ const Post = ({ loadingLabel, post, handleVote }) =>
         <CardContent>
             <Typography type="body1">{post.body}</Typography>
         </CardContent>
-        <CardActions>
+        <CardActions disableActionSpacing>
             <Button dense color="primary" onClick={handleVote('upVote')}><KeyboardArrowUp /></Button>
             <Button dense color="accent" onClick={handleVote('downVote')}><KeyboardArrowDown /></Button>
             <Tooltip title="Edit post">

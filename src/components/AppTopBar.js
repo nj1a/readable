@@ -15,8 +15,6 @@ import MenuIcon from 'material-ui-icons/Menu'
 const drawerWidth = 240
 const styles = theme => ({
     appBar: {
-        position: 'absolute',
-        marginLeft: drawerWidth,
         [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
         },

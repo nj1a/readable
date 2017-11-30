@@ -21,11 +21,14 @@ import * as types from '../utils/PropTypes'
 // this width should be the same as the one in AppTopBar
 const drawerWidth = 240
 const styles = theme => ({
-    drawerPaper: {
-        width: 250,
+    div: {
         [theme.breakpoints.up('md')]: {
             width: drawerWidth,
-            position: 'relative',
+        },
+    },
+    drawerPaper: {
+        [theme.breakpoints.up('md')]: {
+            width: drawerWidth,
             height: '100%',
         },
     },
@@ -71,7 +74,7 @@ const AppDrawer = ({ categories, classes, handleDrawerToggle, handleNestedCatego
         </div>
     )
     return (
-        <div>
+        <div className={classes.div}>
             <Hidden mdUp>
                 <Drawer type="temporary" open={DrawerOpened}
                     classes={{ paper: classes.drawerPaper, }}

@@ -34,7 +34,7 @@ class App extends Component {
     }
 
     render() {
-        const {sortOpened, anchorEl, sortBy } = this.state
+        const { sortOpened, anchorEl, sortBy } = this.state
         return (
             <Category posts={this.props.posts.sort((a, b) => b[sortBy] - a[sortBy])}
                 category={this.props.category} sortOpened={sortOpened} anchorEl={anchorEl}

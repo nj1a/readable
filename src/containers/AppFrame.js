@@ -15,10 +15,13 @@ const styles = theme => ({
         overflow: 'hidden',
     },
     appFrame: {
+        backgroundColor: theme.palette.background.default,
         position: 'relative',
         display: 'flex',
         width: '100%',
         height: '100%',
+        // minHeight needed to stretch the paper background to the bottom of the view port
+        minHeight: '100vh',
     },
     progressBar: {
         position: 'fixed',
@@ -27,14 +30,20 @@ const styles = theme => ({
         zIndex: 1400,
     },
     content: {
-        backgroundColor: theme.palette.background.default,
         width: '100%',
-        padding: theme.spacing.unit * 3,
-        height: 'calc(100% - 56px)',
-        marginTop: 56,
+        margin: '0 auto',
+        paddingTop: 120,
+        flex: '1 1 100%',
         [theme.breakpoints.up('sm')]: {
-            height: 'calc(100% - 64px)',
-            marginTop: 64,
+            paddingLeft: 25,
+            paddingRight: 25,
+        },
+        // a differnt width for content to accomodate the drawer on medium devices
+        [theme.breakpoints.between('md', 'lg')]: {
+            maxWidth: 700,
+        },
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: 900,
         },
     },
 })

@@ -13,6 +13,9 @@ import upperFirst from 'lodash/upperFirst'
 import * as types from '../utils/PropTypes'
 
 const styles = theme => ({
+    div: {
+        margin: 10,
+    },
     listItem: {
         background: theme.palette.background.paper,
         margin: 10,
@@ -26,7 +29,7 @@ const styles = theme => ({
 })
 
 const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick, handleRequestClose }) => 
-    <div>
+    <div className={classes.div}>
         <div className={classes.flex}>
             <Typography type="headline">{upperFirst(category)} Posts</Typography>
             <div className={classes.middleBuffer} />
@@ -36,13 +39,22 @@ const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick,
                     <MenuItem key={by} onClick={handleRequestClose(by)}>{by}</MenuItem>    
                 )}
             </Menu>
-        </div> 
+        </div>
         <List>
-            {posts.map(post =>
-                <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >    
-                    <Tooltip title={`Score ${post.voteScore}`}><Avatar>{post.voteScore}</Avatar></Tooltip>
-                    <ListItemText primary={post.title} secondary={(new Date(post.timestamp)).toDateString()} />
-                </ListItem>)}
+            {posts.length
+                ? (posts.map(post =>
+                    <ListItem button component={Link} key={post.id} to={`/posts/${post.id}`} className={classes.listItem} >
+                        <Tooltip title={`Score ${post.voteScore}`}>
+                            <Avatar>{post.voteScore}</Avatar>
+                        </Tooltip>
+                        <ListItemText primary={post.title} secondary={(new Date(post.timestamp)).toDateString()} />
+                    </ListItem>)
+                )
+                : (<Typography type="title">
+                    Sorry there is no post for this category. Do you want to be the first to add a post?
+                    </Typography>
+                )
+            }
         </List>
     </div>
 

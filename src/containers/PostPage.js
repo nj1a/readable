@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import withStyles from 'material-ui/styles/withStyles'
+import Typography from 'material-ui/Typography'
 
 import { loadPost, loadCommentsOfPost, votePost, voteComment } from '../actions/index'
 import Post from '../components/Post'
 import Comment from '../components/Comment'
 import * as types from '../utils/PropTypes'
+
+const styles = theme => ({
+    margin: {
+        margin: 10,
+    },
+})
 
 class PostPage extends Component {
     static propTypes = {
@@ -31,23 +39,26 @@ class PostPage extends Component {
     }
 
     render() {
-        const { id, comments, post } = this.props
-        const postProps = {
-            post,
-            handleVote: this.handleVote('post', id),
-            loadingLabel: "Loading..."
-        }
-        
+        const { id, comments, post, classes } = this.props
         return (
-            <div>
-                {postProps.post && <Post {...postProps} />}
+            <div className={classes.margin}>
+                {post &&
+                    <div className={classes.margin}>    
+                    <Post post={post} handleVote={this.handleVote('post', id)} loadingLabel="Loading..." />
+                    </div>}
                 <h2>Comments</h2>
-                {comments.map(comment => (
-                    <div key={comment.id}>
-                        <Comment comment={comment} loadingLabel='Loading...'
-                            handleVote={this.handleVote('comment', comment.id)} />
-                    </div>
-                ))}
+                {comments.length 
+                    ? (comments.map(comment =>
+                        <div key={comment.id} className={classes.margin}>
+                            <Comment comment={comment} loadingLabel='Loading...'
+                                handleVote={this.handleVote('comment', comment.id)} />
+                        </div>)
+                    )
+                    : (<Typography type="subheading">
+                        Sorry there is no comment for this post. Do you want to be the first to add a comment?
+                        </Typography>
+                    )
+                }
             </div>    
         )
     }
@@ -61,9 +72,9 @@ const mapStateToProps = (state, ownProps) => ({
         .sort((a, b) => b.voteScore - a.voteScore)
 })
 
-export default connect(mapStateToProps, {
+export default withStyles(styles)(connect(mapStateToProps, {
     loadPost,
     loadCommentsOfPost,
     votePost,
     voteComment
-})(PostPage)
+})(PostPage))
