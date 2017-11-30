@@ -47,7 +47,7 @@ class PostPage extends Component {
                     <Post post={post} handleVote={this.handleVote('post', id)} loadingLabel="Loading..." />
                     </div>}
                 <h2>Comments</h2>
-                {comments.length 
+                {comments.length
                     ? (comments.map(comment =>
                         <div key={comment.id} className={classes.margin}>
                             <Comment comment={comment} loadingLabel='Loading...'

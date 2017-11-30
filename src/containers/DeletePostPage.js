@@ -1,6 +1,7 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router'
 
 import { deletePost } from '../actions'
 
@@ -9,12 +10,21 @@ class DeletePostPage extends Component {
         deletePost: PropTypes.func.isRequired
     }
 
-    componentDidMount() {
-        this.props.deletePost(this.props.match.params.id)
+    state = {
+        startRedirect: false,
+    }
+
+    async componentDidMount() {
+        await this.props.deletePost(this.props.match.params.id)
+        this.setState({ startRedirect: true })
     }
 
     render() {
-        return null
+        return (
+            <div>
+                {this.state.startRedirect &&  < Redirect to='/' />}
+            </div>    
+        )  
     }
 }
 

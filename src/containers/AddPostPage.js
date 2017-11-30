@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 import uuidv4 from 'uuid/v4'
 
 import { addPost } from '../actions'
@@ -13,7 +14,11 @@ class AddPostPage extends Component {
         categories: types.categories.isRequired,
     }
 
-    handleSubmit = (event) => {
+    state = {
+        startRedirect: false,
+    }
+
+    handleSubmit = async event => {
         event.preventDefault()
 
         // FormData's instancem method entries() returns an iterator, and it
@@ -23,12 +28,16 @@ class AddPostPage extends Component {
         const data = new FormData(event.target)
         const dataArray = [...data.entries(), ['id', uuidv4()], ['timestamp', Date.now()]]
         const dataObject = Object.assign(...dataArray.map(d => ({ [d[0]]: d[1] })))
-        this.props.addPost(dataObject)
+        await this.props.addPost(dataObject)
+        this.setState({ startRedirect: true })
     }
 
     render() {
         return (
-            <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories}/>
+            <div>
+                <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories} />
+                {this.state.startRedirect && <Redirect to='/' />}
+            </div>
         )
     }
 }

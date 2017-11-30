@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
 import { editPost } from '../actions'
 import PostEditor from '../components/PostEditor'
@@ -14,20 +15,29 @@ class EditPostPage extends Component {
         post: types.post.isRequired,
     }
 
-    handleSubmit = event => {
+    state = {
+        startRedirect: false,
+    }
+
+    handleSubmit = async event => {
         event.preventDefault()
 
         const data = new FormData(event.target)
-        this.props.editPost({
+        await this.props.editPost({
             id: this.props.id,
             title: data.get('title'),
             body: data.get('body')
         })
+        this.setState({ startRedirect: true })
     }
 
     render() {
+        const { categories, post } = this.props 
         return (
-            <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories} post={this.props.post} />
+            <div>
+                <PostEditor handleSubmit={this.handleSubmit} categories={categories} post={post} />
+                {this.state.startRedirect && <Redirect to={`/posts/${post.id}`} />}
+            </div>    
         )
     }
 }

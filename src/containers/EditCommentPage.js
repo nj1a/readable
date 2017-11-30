@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router'
 
 import { editComment } from '../actions'
 import CommentEditor from '../components/CommentEditor'
@@ -14,28 +15,41 @@ class EditCommentPage extends Component {
         postTitle: PropTypes.string.isRequired,
     }
 
-    handleSubmit = event => {
+    state = {
+        startRedirect: false,
+    }
+
+    handleSubmit = async event => {
         event.preventDefault()
 
         const data = new FormData(event.target)
-        this.props.editComment({
+        await this.props.editComment({
             id: this.props.id,
             body: data.get('body')
         })
+        this.setState({ startRedirect: true })
     }
 
     render() {
+        const { comment, postTitle } = this.props
         return (
-            <CommentEditor handleSubmit={this.handleSubmit} comment={this.props.comment}
-                postTitle={this.props.postTitle} />
+            <div>
+                <CommentEditor handleSubmit={this.handleSubmit} comment={comment}
+                    postTitle={postTitle} />
+                {this.state.startRedirect && <Redirect to={`/posts/${comment.parentId}`} />}
+            </div>    
         )
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    id: ownProps.match.params.id,
-    comment: state.entities.comments[ownProps.match.params.id],
-    postTitle: state.entities.posts[state.entities.comments[ownProps.match.params.id].parentId].title,
-})
+const mapStateToProps = (state, ownProps) => {
+    const id = ownProps.match.params.id
+    const comment = state.entities.comments[id]
+    return {
+        id,
+        comment,
+        postTitle: state.entities.posts[comment.parentId].title,
+    }
+}
 
 export default connect(mapStateToProps, { editComment })(EditCommentPage)
