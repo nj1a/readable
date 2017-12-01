@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography'
 import { loadPost, loadCommentsOfPost, votePost, voteComment, deletePost, deleteComment } from '../actions/index'
 import Post from '../components/Post'
 import Comment from '../components/Comment'
+import NoMatch from '../components/NoMatch'
 import * as types from '../utils/PropTypes'
 
 const styles = theme => ({
@@ -54,25 +55,27 @@ class PostPage extends Component {
         const { id, comments, post, classes } = this.props
         const commentCount = comments.length
         return (
-            <div className={classes.margin}>
-                {post &&
-                    <div className={classes.margin}>    
+            <div>
+                {post 
+                    ? <div className={classes.margin}>
                         <Post post={post} handleVote={this.handleVote('post', id)} commentCount={commentCount}
                             handleDeletePost={this.handleDeletePost} />
-                    </div>}
-                <h2>Comments</h2>
-                {commentCount
-                    ? (comments.map(comment =>
-                        <div key={comment.id} className={classes.margin}>
-                            <Comment comment={comment} handleVote={this.handleVote('comment', comment.id)}
-                                handleDeleteComment={this.handleDeleteComment(comment.id)} />
-                        </div>)
-                    )
-                    : (<Typography type="subheading">
-                        Sorry there is no comment for this post. Do you want to be the first to add a comment?
-                        </Typography>
-                    )
-                }
+                        <h2>Comments</h2>
+                        {commentCount
+                            ? (comments.map(comment =>
+                                <div key={comment.id} className={classes.margin}>
+                                    <Comment comment={comment} handleVote={this.handleVote('comment', comment.id)}
+                                        handleDeleteComment={this.handleDeleteComment(comment.id)} />
+                                </div>)
+                            )
+                            : (<Typography type="subheading">
+                                Sorry there is no comment for this post. Do you want to be the first to add a comment?
+                                </Typography>
+                            )
+                        }
+                    </div>
+                    : <NoMatch location={{ pathname: 'a post' }}/>
+                }    
             </div>    
         )
     }
