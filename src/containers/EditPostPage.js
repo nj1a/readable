@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
+import { withRouter } from 'react-router'
 
 import { editPost } from '../actions'
 import PostEditor from '../components/PostEditor'
@@ -15,20 +15,17 @@ class EditPostPage extends Component {
         post: types.post.isRequired,
     }
 
-    state = {
-        startRedirect: false,
-    }
-
     handleSubmit = async event => {
         event.preventDefault()
 
+        const { editPost, history, post, id } = this.props
         const data = new FormData(event.target)
-        await this.props.editPost({
-            id: this.props.id,
+        await editPost({
+            id,
             title: data.get('title'),
             body: data.get('body')
         })
-        this.setState({ startRedirect: true })
+        history.replace(`/${post.category}/${post.id}`)
     }
 
     render() {
@@ -36,7 +33,6 @@ class EditPostPage extends Component {
         return (
             <div>
                 <PostEditor handleSubmit={this.handleSubmit} categories={categories} post={post} />
-                {this.state.startRedirect && <Redirect to={`/posts/${post.id}`} />}
             </div>    
         )
     }
@@ -48,4 +44,4 @@ const mapStateToProps = (state, ownProps) => ({
     post: state.entities.posts[ownProps.match.params.id],
 })
 
-export default connect(mapStateToProps, { editPost })(EditPostPage)
+export default withRouter(connect(mapStateToProps, { editPost })(EditPostPage))

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
+import { withRouter } from 'react-router'
 import uuidv4 from 'uuid/v4'
 
 import { addPost } from '../actions'
@@ -14,10 +14,6 @@ class AddPostPage extends Component {
         categories: types.categories.isRequired,
     }
 
-    state = {
-        startRedirect: false,
-    }
-
     handleSubmit = async event => {
         event.preventDefault()
 
@@ -25,18 +21,18 @@ class AddPostPage extends Component {
         // needs to be converted to a plain object to be consumed by addPost().
         // The first step is to convert an iterator to a [[Key, Vlaue]] array,
         // and the second step is to convert this array to a {Key: Value} object.
+        const { addPost, history } = this.props
         const data = new FormData(event.target)
         const dataArray = [...data.entries(), ['id', uuidv4()], ['timestamp', Date.now()]]
         const dataObject = Object.assign(...dataArray.map(d => ({ [d[0]]: d[1] })))
-        await this.props.addPost(dataObject)
-        this.setState({ startRedirect: true })
+        await addPost(dataObject)
+        history.replace('/')
     }
 
     render() {
         return (
             <div>
                 <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories} />
-                {this.state.startRedirect && <Redirect to='/' />}
             </div>
         )
     }
@@ -46,4 +42,4 @@ const mapStateToProps = state => ({
     categories: Object.values(state.entities.categories),
 })
 
-export default connect(mapStateToProps, { addPost })(AddPostPage)
+export default withRouter(connect(mapStateToProps, { addPost })(AddPostPage))

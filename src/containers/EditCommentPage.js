@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router'
+import { withRouter } from 'react-router'
 
 import { editComment } from '../actions'
 import CommentEditor from '../components/CommentEditor'
@@ -12,31 +12,27 @@ class EditCommentPage extends Component {
         editComment: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
         comment: types.comment.isRequired,
-        postTitle: PropTypes.string.isRequired,
-    }
-
-    state = {
-        startRedirect: false,
+        post: types.post.isRequired,
     }
 
     handleSubmit = async event => {
         event.preventDefault()
 
+        const { editComment, post, history } = this.props
         const data = new FormData(event.target)
-        await this.props.editComment({
+        await editComment({
             id: this.props.id,
             body: data.get('body')
         })
-        this.setState({ startRedirect: true })
+        history.replace(`/${post.category}/${post.id}`)
     }
 
     render() {
-        const { comment, postTitle } = this.props
+        const { comment, post } = this.props
         return (
             <div>
                 <CommentEditor handleSubmit={this.handleSubmit} comment={comment}
-                    postTitle={postTitle} />
-                {this.state.startRedirect && <Redirect to={`/posts/${comment.parentId}`} />}
+                    postTitle={post.title} />
             </div>    
         )
     }
@@ -48,8 +44,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         id,
         comment,
-        postTitle: state.entities.posts[comment.parentId].title,
+        post: state.entities.posts[comment.parentId],
     }
 }
 
-export default connect(mapStateToProps, { editComment })(EditCommentPage)
+export default withRouter(connect(mapStateToProps, { editComment })(EditCommentPage))
