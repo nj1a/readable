@@ -5,7 +5,6 @@ import AppFrame from './AppFrame'
 import App from './App'
 import PostPage from './PostPage'
 import EditPostPage from './EditPostPage'
-import DeletePostPage from './DeletePostPage'
 import AddPostPage from './AddPostPage'
 import AddCommentPage from './AddCommentPage'
 import EditCommentPage from './EditCommentPage'
@@ -18,7 +17,6 @@ const Root = () => (
             <Route exact path='/' component={App} />
             <Route exact path='/posts/add' component={AddPostPage} />
             <Route exact path='/posts/:id/edit' component={EditPostPage} />
-            <Route exact path='/posts/:id/delete' component={DeletePostPage} />
             <Route exact path='/posts/:parentId/comments/add' component={AddCommentPage} />
             <Route exact path='/comments/:id/edit' component={EditCommentPage} />
             <Route exact path='/comments/:id/delete' component={DeleteCommentPage} />

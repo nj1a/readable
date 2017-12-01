@@ -53,14 +53,13 @@ export default store => next => async ({ types, call, payload = {}, schema, shou
     //         }))
     //     )
 
-    // sleep can be used to demo the progress bar
-    // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
     try {
         const response = await call(payload)
         const json = await response.json()
-        if (response.ok) {
-            // await sleep(3000)
+        if (response.ok) { 
+            // sleep can be used to demo the progress bar
+            // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+            // await sleep(2000)
             next(Object.assign({}, payload, {
                 type: successType,
                 response: normalize(json, schema),

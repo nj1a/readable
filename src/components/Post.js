@@ -15,9 +15,9 @@ import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
-const Post = ({ loadingLabel, post, handleVote }) =>
+const Post = ({ post, handleVote, commentCount, handleDeletePost }) =>
     <Card>
-        <CardHeader avatar={<Badge badgeContent={post.commentCount} color="accent"><Tooltip title="Score"><Avatar>{post.voteScore}</Avatar></Tooltip></Badge>}
+        <CardHeader avatar={<Badge badgeContent={commentCount} color="accent"><Tooltip title="Score"><Avatar>{post.voteScore}</Avatar></Tooltip></Badge>}
             title={`${post.category}::${post.title}`} subheader={`@${post.author} | ${(new Date(post.timestamp)).toDateString()}`}>
         </CardHeader>
         <CardContent>
@@ -30,7 +30,7 @@ const Post = ({ loadingLabel, post, handleVote }) =>
                 <Button component={Link} to={`/posts/${post.id}/edit`}><ModeEdit /></Button>
             </Tooltip>
             <Tooltip title="Delete post">
-                <Button color="accent" component={Link} to={`/posts/${post.id}/delete`}><Delete /></Button>
+                <Button color="accent" onClick={handleDeletePost}><Delete /></Button>
             </Tooltip>
             <Tooltip title="Add a comment">
                 <Button color="primary" component={Link} to={`/posts/${post.id}/comments/add`}><Comment /></Button>
@@ -38,9 +38,11 @@ const Post = ({ loadingLabel, post, handleVote }) =>
         </CardActions>
     </Card>
 
-Post.protoTypes = {
-    loadingLabel: PropTypes.string.isRequired,
+Post.propTypes = {
     post: types.post.isRequired,
+    handleVote: PropTypes.func.isRequired,
+    commentCount: PropTypes.number.isRequired,
+    handleDeletePost: PropTypes.func.isRequired,
 }
 
 export default Post

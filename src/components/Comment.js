@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Card, { CardContent, CardHeader } from 'material-ui/Card'
@@ -13,7 +13,7 @@ import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
-const Comment = ({ loadingLabel, comment, handleVote }) => (
+const Comment = ({ comment, handleVote }) => (
     <Card>
         <CardHeader avatar={<Tooltip title="Score"><Avatar>{comment.voteScore}</Avatar></Tooltip>}
             title={
@@ -25,7 +25,7 @@ const Comment = ({ loadingLabel, comment, handleVote }) => (
                     </Tooltip>
                     <Tooltip title="Delete comment">
                         <Button color="accent" component={Link} to={`/comments/${comment.id}/delete`}><Delete /></Button>
-                    </Tooltip>    
+                    </Tooltip>
                 </div>
                 } subheader={`@${comment.author} | ${(new Date(comment.timestamp)).toDateString()}`}>
         </CardHeader>
@@ -36,8 +36,7 @@ const Comment = ({ loadingLabel, comment, handleVote }) => (
 )
 
 
-Comment.protoTypes = {
-    loadingLabel: PropTypes.string.isRequired,
+Comment.propTypes = {
     comment: types.comment.isRequired,
 }
 

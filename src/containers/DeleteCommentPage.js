@@ -15,7 +15,7 @@ class DeletePostPage extends Component {
     }
 
     async componentDidMount() {
-        this.props.deleteComment(this.props.match.params.id)
+        await this.props.deleteComment(this.props.match.params.id)
         this.setState({ startRedirect: true })
     }
 
