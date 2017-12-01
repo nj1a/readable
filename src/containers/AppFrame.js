@@ -53,6 +53,7 @@ class AppFrame extends Component {
         DrawerOpened: false,
         categoryOpened: true,
         isLoading: false,
+        snackBarOpen: false,
     }
 
     handleDrawerToggle = () => {
@@ -62,36 +63,28 @@ class AppFrame extends Component {
     handleNestedCategoryToggle = () => {
         this.setState({ categoryOpened: !this.state.categoryOpened });
     }
-
-    setIsLoading = () => {
-        this.setState({ isLoading: true })
-    }
-
-    setIsNotLoading = () => {
-        this.setState({ isLoading: false })
-    }
-
+    
     componentDidMount() {
         this.props.loadCategories()
         this.props.loadPosts()
     }
 
     render() {
-        const { classes, children } = this.props
+        const { classes, children, isLoading } = this.props
         const { DrawerOpened, categoryOpened } = this.state
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
-                    <div className={classes.progressBar} >
+                    {isLoading && <div className={classes.progressBar} >
                         <LinearProgress color="accent" />
-                    </div>
+                    </div>}
                     <AppTopBar handleDrawerToggle={this.handleDrawerToggle} />
                     <AppDrawer DrawerOpened={DrawerOpened} categoryOpened={categoryOpened}
                         handleDrawerToggle={this.handleDrawerToggle}
                         handleNestedCategoryToggle={this.handleNestedCategoryToggle} />
                     <main className={classes.content}>
                         {children}
-                    </main>    
+                    </main>
                 </div>
             </div>    
         )
@@ -109,7 +102,11 @@ AppFrame.propTypes = {
     loadCategories: PropTypes.func.isRequired,
 }
 
-export default withStyles(styles)(connect(null, {
+const mapStateToProps = (state, ownProps) => ({
+    isLoading: state.isLoading,
+})
+
+export default withStyles(styles)(connect(mapStateToProps, {
     loadPosts,
     loadCategories
 })(AppFrame))

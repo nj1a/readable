@@ -11,21 +11,20 @@ export const resetErrorMessage = () => ({
 export const GET_CATEGORIES_REQUEST = 'GET_CATEGORIES_REQUEST'
 export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS'
 export const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE'
- 
-export const loadCategories = () => (dispatch, getState) => {
+
+export const loadCategories = () => (dispatch, getState) =>
     dispatch({
         types: [GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, GET_CATEGORIES_FAILURE],
         call: api.getAllCategories,
         shouldCall: isEmpty(getState().entities.categories),
         schema: Schemas.CATEGORIES
     })
-}
 
 export const GET_POSTS_OF_CATEGORY_REQUEST = 'GET_POSTS_OF_CATEGORY_REQUEST'
 export const GET_POSTS_OF_CATEGORY_SUCCESS = 'GET_POSTS_OF_CATEGORY_SUCCESS'
 export const GET_POSTS_OF_CATEGORY_FAILURE = 'GET_POSTS_OF_CATEGORY_FAILURE'
 
-export const loadPostsOfCategory = category => (dispatch, getState) => {
+export const loadPostsOfCategory = category => (dispatch, getState) =>
     dispatch({
         types: [GET_POSTS_OF_CATEGORY_REQUEST, GET_POSTS_OF_CATEGORY_SUCCESS, GET_POSTS_OF_CATEGORY_FAILURE],
         call: api.getPostsOfCategory,
@@ -33,7 +32,6 @@ export const loadPostsOfCategory = category => (dispatch, getState) => {
         payload: { category },
         schema: Schemas.POSTS
     })
-}
 
 export const GET_POSTS_REQUEST = 'GET_POSTS_REQUEST'
 export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS'

@@ -15,5 +15,4 @@ The app was developed by implementing the functionalities first (with no css or 
 
 ## Future
 
-CI and coverage have been set up and can be actually worked on if time permits.
-
+CI and coverage have been set up and can be actually worked on if time permits. Also, the error handling seems a bit complicated so the implementation of error related components has been temporarily given up.

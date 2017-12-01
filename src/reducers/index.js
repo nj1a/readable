@@ -18,9 +18,15 @@ const errorMessage = (state = null, action) => {
     return state
 }
 
+const isLoading = (state = null, action) => {
+    // should return true when isLoading is true or undefined
+    return action.isLoading !== false
+}
+
 const rootReducer = combineReducers({
     entities,
-    errorMessage
+    errorMessage,
+    isLoading
 })
 
 export default rootReducer
