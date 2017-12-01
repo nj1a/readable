@@ -13,7 +13,7 @@ import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
-const Comment = ({ comment, handleVote }) => (
+const Comment = ({ comment, handleVote, handleDeleteComment }) => (
     <Card>
         <CardHeader avatar={<Tooltip title="Score"><Avatar>{comment.voteScore}</Avatar></Tooltip>}
             title={
@@ -24,7 +24,7 @@ const Comment = ({ comment, handleVote }) => (
                         <Button component={Link} to={`/comments/${comment.id}/edit`}><ModeEdit /></Button>
                     </Tooltip>
                     <Tooltip title="Delete comment">
-                        <Button color="accent" component={Link} to={`/comments/${comment.id}/delete`}><Delete /></Button>
+                        <Button color="accent" onClick={handleDeleteComment}><Delete /></Button>
                     </Tooltip>
                 </div>
                 } subheader={`@${comment.author} | ${(new Date(comment.timestamp)).toDateString()}`}>

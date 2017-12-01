@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import withStyles from 'material-ui/styles/withStyles'
 import Typography from 'material-ui/Typography'
 
-import { loadPost, loadCommentsOfPost, votePost, voteComment, deletePost } from '../actions/index'
+import { loadPost, loadCommentsOfPost, votePost, voteComment, deletePost, deleteComment } from '../actions/index'
 import Post from '../components/Post'
 import Comment from '../components/Comment'
 import * as types from '../utils/PropTypes'
@@ -39,6 +39,12 @@ class PostPage extends Component {
         history.replace(`/${post.category}`)
     }
 
+    handleDeleteComment = commentId => async () => {
+        const { deleteComment, post, history } = this.props
+        await deleteComment(commentId)
+        history.replace(`/${post.category}/${post.id}`)
+    }
+
     componentDidMount() {
         this.props.loadPost(this.props.id)
         this.props.loadCommentsOfPost(this.props.id)
@@ -51,13 +57,15 @@ class PostPage extends Component {
             <div className={classes.margin}>
                 {post &&
                     <div className={classes.margin}>    
-                    <Post post={post} handleVote={this.handleVote('post', id)} commentCount={commentCount} handleDeletePost={this.handleDeletePost}/>
+                        <Post post={post} handleVote={this.handleVote('post', id)} commentCount={commentCount}
+                            handleDeletePost={this.handleDeletePost} />
                     </div>}
                 <h2>Comments</h2>
                 {commentCount
                     ? (comments.map(comment =>
                         <div key={comment.id} className={classes.margin}>
-                            <Comment comment={comment} handleVote={this.handleVote('comment', comment.id)} />
+                            <Comment comment={comment} handleVote={this.handleVote('comment', comment.id)}
+                                handleDeleteComment={this.handleDeleteComment(comment.id)} />
                         </div>)
                     )
                     : (<Typography type="subheading">
@@ -84,4 +92,5 @@ export default withStyles(styles)(withRouter(connect(mapStateToProps, {
     votePost,
     voteComment,
     deletePost,
+    deleteComment,
 })(PostPage)))
