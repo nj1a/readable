@@ -53,7 +53,6 @@ export const loadPost = id => (dispatch, getState) =>
     dispatch({
         types: [GET_POST_REQUEST, GET_POST_SUCCESS, GET_POST_FAILURE],
         call: api.getPost,
-        shouldCall: !getState().entities.posts[id],
         payload: { id },
         schema: Schemas.POST
     })

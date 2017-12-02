@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { votePost, deletePost } from '../actions/index'
 import Category from '../components/Category'
 import * as types from '../utils/PropTypes'
 
 class App extends Component {
     static propTypes = {
         posts: types.posts.isRequired,
+        votePost: PropTypes.func.isRequired,
+        deletePost: PropTypes.func.isRequired,
     }
 
     state = {
@@ -27,12 +30,21 @@ class App extends Component {
         }
     }
 
+    handleVote = (id, option) => () => {
+        this.props.votePost({ id, option })
+    }
+
+    handleDeletePost = post => () => {
+        this.props.deletePost(post.id)
+    }
+
     render() {
         const { sortOpened, anchorEl, sortBy } = this.state
         return (
             <Category posts={this.props.posts.sort((a, b) => b[sortBy] - a[sortBy])}
                 category={this.props.category} sortOpened={sortOpened} anchorEl={anchorEl}
-                handleClick={this.handleClick} handleRequestClose={this.handleRequestClose} />
+                handleClick={this.handleClick} handleRequestClose={this.handleRequestClose}
+                handleVote={this.handleVote} handleDeletePost={this.handleDeletePost} />
         )
     }
 }
@@ -49,4 +61,7 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, {
+    votePost,
+    deletePost
+})(App)

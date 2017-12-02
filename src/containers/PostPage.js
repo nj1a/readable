@@ -41,9 +41,9 @@ class PostPage extends Component {
     }
 
     handleDeleteComment = commentId => async () => {
-        const { deleteComment, post, history } = this.props
+        const { deleteComment, loadPost, post } = this.props
         await deleteComment(commentId)
-        history.replace(`/${post.category}/${post.id}`)
+        await loadPost(post.id)
     }
 
     componentDidMount() {
@@ -53,15 +53,14 @@ class PostPage extends Component {
 
     render() {
         const { id, comments, post, classes } = this.props
-        const commentCount = comments.length
         return (
             <div>
                 {post 
                     ? <div className={classes.margin}>
-                        <Post post={post} handleVote={this.handleVote('post', id)} commentCount={commentCount}
+                        <Post post={post} handleVote={this.handleVote('post', id)}
                             handleDeletePost={this.handleDeletePost} />
                         <h2>Comments</h2>
-                        {commentCount
+                        {post.commentCount
                             ? (comments.map(comment =>
                                 <div key={comment.id} className={classes.margin}>
                                     <Comment comment={comment} handleVote={this.handleVote('comment', comment.id)}

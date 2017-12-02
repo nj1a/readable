@@ -7,8 +7,13 @@ import Avatar from 'material-ui/Avatar'
 import Typography from 'material-ui/Typography'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Button from 'material-ui/Button'
+import Badge from 'material-ui/Badge'
 import withStyles from 'material-ui/styles/withStyles'
 import upperFirst from 'lodash/upperFirst'
+import KeyboardArrowUp from 'material-ui-icons/KeyboardArrowUp'
+import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown'
+import ModeEdit from 'material-ui-icons/ModeEdit'
+import Delete from 'material-ui-icons/Delete'
 
 import * as types from '../utils/PropTypes'
 
@@ -28,7 +33,7 @@ const styles = theme => ({
     },
 })
 
-const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick, handleRequestClose }) => 
+const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick, handleRequestClose, handleVote, handleDeletePost }) => 
     <div className={classes.div}>
         <div className={classes.flex}>
             <Typography type="headline">{upperFirst(category)} Posts</Typography>
@@ -43,15 +48,29 @@ const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick,
         <List>
             {posts.length
                 ? (posts.map(post =>
-                    <ListItem button component={Link} key={post.id} to={`/${post.category}/${post.id}`} className={classes.listItem} >
-                        <Tooltip title={`Score ${post.voteScore}`}>
-                            <Avatar>{post.voteScore}</Avatar>
+                    <div key={post.id}>
+                        <ListItem button component={Link} to={`/${post.category}/${post.id}`} className={classes.listItem} >
+                            <Badge badgeContent={post.commentCount} color="accent">
+                                <Tooltip title={`Score ${post.voteScore}`}>
+                                    {/* somehow Avatar doesn't show number 0 */}
+                                    <Avatar>{post.voteScore || '0'}</Avatar>
+                                </Tooltip>
+                            </Badge>
+                            <ListItemText primary={post.title} secondary={`@${post.author} | ${(new Date(post.timestamp)).toDateString()}`} />
+                        </ListItem>
+                        <Button dense color="primary" onClick={handleVote(post.id, 'upVote')}><KeyboardArrowUp /></Button>
+                        <Button dense color="accent" onClick={handleVote(post.id, 'downVote')}><KeyboardArrowDown /></Button>
+                        <Tooltip title="Edit post">
+                            <Button component={Link} to={`/posts/${post.id}/edit`}><ModeEdit /></Button>
                         </Tooltip>
-                        <ListItemText primary={post.title} secondary={(new Date(post.timestamp)).toDateString()} />
-                    </ListItem>)
+                        <Tooltip title="Delete post">
+                            <Button color="accent" onClick={handleDeletePost(post)}><Delete /></Button>
+                        </Tooltip>
+                    </div>    
+                )
                 )
                 : (<Typography type="title">
-                    Sorry there is no post for this category. Do you want to be the first to add a post?
+                        There is no post for this category. Do you want to be the first to add a post?
                     </Typography>
                 )
             }

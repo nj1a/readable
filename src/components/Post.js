@@ -15,9 +15,10 @@ import Tooltip from 'material-ui/Tooltip'
 
 import * as types from '../utils/PropTypes'
 
-const Post = ({ post, handleVote, commentCount, handleDeletePost }) =>
+const Post = ({ post, handleVote, handleDeletePost }) =>
     <Card>
-        <CardHeader avatar={<Badge badgeContent={commentCount} color="accent"><Tooltip title="Score"><Avatar>{post.voteScore}</Avatar></Tooltip></Badge>}
+        <CardHeader avatar={<Badge badgeContent={post.commentCount} color="accent">
+            <Tooltip title="Score"><Avatar>{post.voteScore || '0'}</Avatar></Tooltip></Badge>}
             title={`${post.category}::${post.title}`} subheader={`@${post.author} | ${(new Date(post.timestamp)).toDateString()}`}>
         </CardHeader>
         <CardContent>
@@ -41,7 +42,6 @@ const Post = ({ post, handleVote, commentCount, handleDeletePost }) =>
 Post.propTypes = {
     post: types.post.isRequired,
     handleVote: PropTypes.func.isRequired,
-    commentCount: PropTypes.number.isRequired,
     handleDeletePost: PropTypes.func.isRequired,
 }
 
