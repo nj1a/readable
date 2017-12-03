@@ -44,6 +44,9 @@ PostEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     categories: types.categories.isRequired,
     post: types.post,
+    classes: PropTypes.object.isRequired,
+    category: PropTypes.string,
+    handleCategoryChange: PropTypes.func,
 }
 
 export default withStyles(styles)(PostEditor)

@@ -8,10 +8,8 @@ import configureStore from './store/configureStore'
 
 import './index.css'
 
-const store = configureStore()
-
 ReactDOM.render(
-    <Provider store={store}>
+    <Provider store={configureStore()}>
         <BrowserRouter> 
             <Root />
         </BrowserRouter>

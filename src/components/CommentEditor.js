@@ -35,6 +35,7 @@ CommentEditor.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     comment: types.comment,
     postTitle: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(CommentEditor)

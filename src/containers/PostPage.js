@@ -80,11 +80,11 @@ class PostPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    id: ownProps.match.params.id,
-    post: state.entities.posts[ownProps.match.params.id],
-    comments: Object.values(state.entities.comments)
-        .filter(comment => !comment.deleted && comment.parentId === ownProps.match.params.id)
+const mapStateToProps = ({ entities: { posts, comments } }, { match: { params: { id } } }) => ({
+    id,
+    post: posts[id],
+    comments: Object.values(comments)
+        .filter(comment => !comment.deleted && comment.parentId === id)
         .sort((a, b) => b.voteScore - a.voteScore)
 })
 

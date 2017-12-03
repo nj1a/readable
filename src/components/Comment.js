@@ -1,5 +1,5 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import { Link } from 'react-router-dom'
 import Card, { CardContent, CardHeader } from 'material-ui/Card'
@@ -38,6 +38,8 @@ const Comment = ({ comment, handleVote, handleDeleteComment }) => (
 
 Comment.propTypes = {
     comment: types.comment.isRequired,
+    handleVote: PropTypes.func.isRequired,
+    handleDeleteComment: PropTypes.func.isRequired,
 }
 
 export default Comment

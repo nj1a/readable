@@ -38,10 +38,10 @@ class EditPostPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    id: ownProps.match.params.id,
-    categories: Object.values(state.entities.categories),
-    post: state.entities.posts[ownProps.match.params.id],
+const mapStateToProps = ({ entities: { categories, posts } }, { match: { params: { id } } }) => ({
+    id,
+    categories: Object.values(categories),
+    post: posts[id],
 })
 
 export default withRouter(connect(mapStateToProps, { editPost })(EditPostPage))

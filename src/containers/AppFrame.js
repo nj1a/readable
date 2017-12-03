@@ -102,8 +102,8 @@ AppFrame.propTypes = {
     loadCategories: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    isLoading: state.isLoading,
+const mapStateToProps = ({ isLoading }) => ({
+    isLoading
 })
 
 export default withStyles(styles)(connect(mapStateToProps, {

@@ -77,11 +77,16 @@ const Category = ({ posts, category, classes, sortOpened, anchorEl, handleClick,
         </List>
     </div>
 
-Category.protoTypes = {
+Category.propTypes = {
     posts: types.posts.isRequired,
     category: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired,
+    sortOpened: PropTypes.bool.isRequired,
+    anchorEl: PropTypes.object,
+    handleClick: PropTypes.func.isRequired,
+    handleRequestClose: PropTypes.func.isRequired,
+    handleVote: PropTypes.func.isRequired,
+    handleDeletePost: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(Category)

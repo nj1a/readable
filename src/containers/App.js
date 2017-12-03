@@ -19,8 +19,8 @@ class App extends Component {
         sortBy: 'voteScore',
     }
 
-    handleClick = (event) => {
-        this.setState({ sortOpened: true, anchorEl: event.currentTarget });
+    handleClick = ({ currentTarget }) => {
+        this.setState({ sortOpened: true, anchorEl: currentTarget });
     }
 
     handleRequestClose = sortBy => () => {
@@ -49,10 +49,10 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const isHome = ownProps.match.path === '/'
-    const category = isHome ? "all" : ownProps.match.params.category
-    const posts = Object.values(state.entities.posts).filter(post => !post.deleted)
+const mapStateToProps = ({ entities }, { match }) => {
+    const isHome = match.path === '/'
+    const category = isHome ? "all" : match.params.category
+    const posts = Object.values(entities.posts).filter(post => !post.deleted)
     return {
         category,
         posts: isHome

@@ -52,6 +52,7 @@ AppTopBar.propTypes = {
         drawerMobileIcon: PropTypes.string.isRequired,
         middleBuffer: PropTypes.string.isRequired,
     }).isRequired,
+    handleDrawerToggle: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(AppTopBar)

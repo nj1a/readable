@@ -39,16 +39,14 @@ class AddPostPage extends Component {
 
     render() {
         return (
-            <div>
-                <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories}
-                    category={this.state.category} handleCategoryChange={this.handleCategoryChange} />
-            </div>
+            <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories}
+                category={this.state.category} handleCategoryChange={this.handleCategoryChange} />
         )
     }
 }
 
-const mapStateToProps = state => ({
-    categories: Object.values(state.entities.categories),
+const mapStateToProps = ({ entities: { categories }}) => ({
+    categories: Object.values(categories),
 })
 
 export default withRouter(connect(mapStateToProps, { addPost })(AddPostPage))

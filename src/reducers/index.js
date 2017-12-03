@@ -1,16 +1,15 @@
 import { combineReducers } from 'redux'
 import merge from 'lodash/merge'
 
-import * as ActionTypes from '../actions'
+import { RESET_ERROR_MESSAGE } from '../actions'
 
-const entities = (state = { categories: {}, posts: {}, comments: {} }, action) => 
-    (action.response && action.response.entities)
-        ? merge({}, state, action.response.entities)
+const entities = (state = { categories: {}, posts: {}, comments: {} }, { response }) => 
+    (response && response.entities)
+        ? merge({}, state, response.entities)
         : state
 
-const errorMessage = (state = null, action) => {
-    const { type, error } = action
-    if (type === ActionTypes.RESET_ERROR_MESSAGE) {
+const errorMessage = (state = null, { type, error }) => {
+    if (type === RESET_ERROR_MESSAGE) {
         return null
     } else if (error) {
         return error
@@ -18,9 +17,9 @@ const errorMessage = (state = null, action) => {
     return state
 }
 
-const isLoading = (state = null, action) => {
+const isLoading = (state = null, { isLoading }) => {
     // should return true when isLoading is true or undefined
-    return action.isLoading !== false
+    return isLoading !== false
 }
 
 const rootReducer = combineReducers({

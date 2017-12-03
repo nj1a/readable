@@ -98,10 +98,14 @@ AppDrawer.propTypes = {
         categoryList: PropTypes.string.isRequired,
     }).isRequired,
     categories: types.categories.isRequired,
+    handleDrawerToggle: PropTypes.func.isRequired,
+    handleNestedCategoryToggle: PropTypes.func.isRequired,
+    DrawerOpened: PropTypes.bool.isRequired,
+    categoryOpened: PropTypes.bool.isRequired,
 }
 
-const mapStateToProps = state => ({
-    categories: Object.values(state.entities.categories),
+const mapStateToProps = ({ entities: { categories }}) => ({
+    categories: Object.values(categories),
 })
 
 export default withStyles(styles)(connect(mapStateToProps)(AppDrawer))

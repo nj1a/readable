@@ -38,13 +38,12 @@ class EditCommentPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const id = ownProps.match.params.id
-    const comment = state.entities.comments[id]
+const mapStateToProps = ({ entities: { comments, posts } }, { match: { params: { id } } }) => {
+    const comment = comments[id]
     return {
         id,
         comment,
-        post: state.entities.posts[comment.parentId],
+        post: posts[comment.parentId],
     }
 }
 

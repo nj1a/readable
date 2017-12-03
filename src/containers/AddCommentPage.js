@@ -30,17 +30,14 @@ class AddCommentPage extends Component {
     }
 
     render() {
-        const { post } = this.props
         return (
-            <div>
-                <CommentEditor handleSubmit={this.handleSubmit} postTitle={post.title} />
-            </div > 
+            <CommentEditor handleSubmit={this.handleSubmit} postTitle={this.props.post.title} />
         )
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    post: state.entities.posts[ownProps.match.params.parentId],
+const mapStateToProps = ({ entities: { posts } }, { match: { params: { parentId } } }) => ({
+    post: posts[parentId],
 })
 
 export default withRouter(connect(mapStateToProps, { addComment })(AddCommentPage))
