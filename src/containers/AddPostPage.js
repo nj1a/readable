@@ -14,6 +14,14 @@ class AddPostPage extends Component {
         categories: types.categories.isRequired,
     }
 
+    state = {
+        category: this.props.categories[0].name
+    }
+
+    handleCategoryChange = event => {
+        this.setState({ category: event.target.value })
+    }
+
     handleSubmit = async event => {
         event.preventDefault()
 
@@ -32,7 +40,8 @@ class AddPostPage extends Component {
     render() {
         return (
             <div>
-                <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories} />
+                <PostEditor handleSubmit={this.handleSubmit} categories={this.props.categories}
+                    category={this.state.category} handleCategoryChange={this.handleCategoryChange} />
             </div>
         )
     }

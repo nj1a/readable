@@ -28,10 +28,7 @@ export default store => next => async ({ types, call, payload = {}, schema, shou
     }
 
     const [requestType, successType, failureType] = types
-    next(Object.assign({}, payload, {
-        type: requestType,
-        isLoading: true,
-    }))
+    next({ payload, type: requestType, isLoading: true, })
     
     // Both the Promise and async/await approaches work. Use the latte for now.
 
@@ -60,20 +57,12 @@ export default store => next => async ({ types, call, payload = {}, schema, shou
             // sleep can be used to demo the progress bar
             // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
             // await sleep(2000)
-            next(Object.assign({}, payload, {
-                type: successType,
-                response: normalize(json, schema),
-                isLoading: false,
-            }))
+            next({ payload, type: successType, response: normalize(json, schema), isLoading: false, })
         } else {
             throw new Error(json)
         }
     } catch (error) {
-        next(Object.assign({}, payload, {
-            type: failureType,
-            error: error.message || 'Something bad happened',
-            isLoading: false,
-        }))
+        next({ payload, type: failureType, error: error.message || 'Something bad happened', isLoading: false, })
     }
 }
 

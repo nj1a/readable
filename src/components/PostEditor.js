@@ -17,7 +17,7 @@ const styles = theme => ({
     },
 })
 
-const PostEditor = ({ handleSubmit, categories, post, classes }) => 
+const PostEditor = ({ handleSubmit, categories, post, classes, category, handleCategoryChange }) => 
     <div className={classes.div}>
         <p>{post ? 'Edit' : 'Add'} a Post:</p>
         <form onSubmit={handleSubmit} autoComplete="off">
@@ -25,9 +25,9 @@ const PostEditor = ({ handleSubmit, categories, post, classes }) =>
                 defaultValue={post && post.title} required fullWidth />    
             <TextField id="author" name="author" label="Author" margin="normal"
                 defaultValue={post && post.author} required={!post} fullWidth disabled={!!post} />
-            <TextField id="category" name="category" label="Category" margin="normal" 
-                value={post ? post.category : (categories[0] ? categories[0].name : 0)}
-                required={!post} fullWidth select disabled={!!post}>
+            <TextField id="category" name="category" label="Category" margin="normal"
+                value={post ? post.category : category} required={!post} fullWidth
+                select disabled={!!post} onChange={handleCategoryChange}>
                 {categories.map(category => (
                     <MenuItem key={category.name} value={category.name}>{category.name}</MenuItem>
                 ))}    
